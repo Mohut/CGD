@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     void Start() {
         _root = ingameUI.rootVisualElement;
         SetProgress(1, 100);
+        SetPhase(4);
     }
 
     // Update is called once per frame
@@ -23,4 +24,28 @@ public class UIManager : MonoBehaviour
     private void SetProgress(int player, float progress) {
         _root.Q<ProgressBar>("Player"+player+"Progress").lowValue = progress;
     }
+
+    private void SetPhase(int phase)
+    {
+        
+        VisualElement phases = _root.Q<VisualElement>("Phases");
+        if (phase > phases.childCount)
+        {
+            Debug.LogError("Phase is higher than childcount (Code: 30476323)");
+            return;
+        }
+        
+        int currentChild = 0;
+        foreach (VisualElement child in phases.Children())
+        {
+            child.SetEnabled(true);
+            if (currentChild >= phase) {
+                child.SetEnabled(false);
+            }
+
+            currentChild++;
+        }
+    }
+    
+    
 }
