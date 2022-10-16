@@ -64,14 +64,14 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Autsch");
             direction = direction * -1;
-            speed = Mathf.Max(0.5f, speed - 1);
+            //speed = Mathf.Max(0.5f, speed - 1);
         }
     }
 
     private void Update()
     {
-        playedTime += Time.deltaTime;
-        speed = Mathf.Min(speed + (1 / (playedTime * 10)), 3);
-        transform.Translate((Vector3)(direction) * speed * Time.deltaTime);
+        //playedTime += Time.deltaTime;
+        //speed = Mathf.Min(speed + (1 / (playedTime * 10)), 3);
+        transform.Translate((Vector3)(direction) * 1 * Time.deltaTime);
     }
 }
