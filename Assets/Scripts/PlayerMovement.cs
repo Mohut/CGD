@@ -33,8 +33,8 @@ public partial class @PlayerMovement : IInputActionCollection2, IDisposable
                     ""id"": ""05594f17-edb3-448c-9e0e-98f478e5dfe6"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [

@@ -1,50 +1,39 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
+
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     private Tilemap pathTilemap;
     [SerializeField]
     private Tilemap borderTilemap;
-    private PlayerMovement controls;
+    public Rigidbody2D controller;
 
     private Vector2 direction;
 
-    private float playedTime;
-    private float speed = 1;
+    public float speed;
+
     private void Awake()
     {
-        controls = new PlayerMovement();
-        playedTime = 0.0f;
+        //controller = gameObject.GetComponent<Rigidbody2D>();
+   
     }
-
-    private void OnEnable()
-    {
-        controls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        controls.Disable();
-        controls.Main.Enable();
-    }
+    
 
     // Start is called before the first frame update
     void Start()
     {
-        controls.Main.Movement.performed += ctx => Move(ctx.ReadValue<Vector2>());
+        //controls.Main.Movement.performed += ctx => Move(ctx.ReadValue<Vector2>());
     }
 
-    private void Move(Vector2 direction)
+    public void OnMove(InputAction.CallbackContext context)
     {
-        if (!CanMove(direction)) return;
-        Debug.Log("Move" + direction);
+        Debug.Log("hihihihihi");
+        Vector2 direction = context.ReadValue<Vector2>();
         Vector2 check = new Vector2(0, 0);
-        if(direction ==  check) return;
+        if (!CanMove(direction) || direction == check ) return;
+        //Debug.Log("Move" + direction);
         this.direction = (Vector3) direction;
 
     }
@@ -62,16 +51,24 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.name.Equals("LevelBorder"))
         {
-            Debug.Log("Autsch");
-            direction = direction * -1;
+            //Debug.Log("Autsch");
+            //direction = direction * -1;
             //speed = Mathf.Max(0.5f, speed - 1);
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         //playedTime += Time.deltaTime;
         //speed = Mathf.Min(speed + (1 / (playedTime * 10)), 3);
-        transform.Translate((Vector3)(direction) * 1 * Time.deltaTime);
+        //transform.Translate((Vector3)(direction) * speed * Time.deltaTime);
+       
+        
+        //Debug.Log(pos);
+        controller.MovePosition(controller.position + direction * speed * Time.fixedDeltaTime);
+        //controller.velocity = (Vector2) direction * speed * Time.deltaTime;
+        //Debug.Log("Move" + controller.velocity);
+        //controller.AddForce(direction*speed*Time.fixedDeltaTime, ForceMode2D.Force);
+
     }
 }
