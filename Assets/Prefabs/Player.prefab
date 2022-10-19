@@ -146,10 +146,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bab5ef612f09044cb99795d6d2bffc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 1244215213366936261}
+  PlayerColor: {r: 0.0047169924, g: 0.8421777, b: 1, a: 1}
+  speed: 1
   pathTilemap: {fileID: 0}
   borderTilemap: {fileID: 0}
-  controller: {fileID: 1244215213366936261}
-  speed: 1
 --- !u!50 &1244215213366936261
 Rigidbody2D:
   serializedVersion: 4

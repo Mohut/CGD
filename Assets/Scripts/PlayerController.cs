@@ -4,15 +4,22 @@ using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
 {
+    
+    
+    [Header("Player")]
+    public Rigidbody2D controller;
+
+    public Color PlayerColor;
+    private Vector2 direction;
+
+    public float speed;
+    
+    [Header("Map")]
+    
     [SerializeField]
     private Tilemap pathTilemap;
     [SerializeField]
     private Tilemap borderTilemap;
-    public Rigidbody2D controller;
-
-    private Vector2 direction;
-
-    public float speed;
 
     private void Awake()
     {
@@ -29,7 +36,6 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        Debug.Log("hihihihihi");
         Vector2 direction = context.ReadValue<Vector2>();
         Vector2 check = new Vector2(0, 0);
         if (!CanMove(direction) || direction == check ) return;
@@ -47,14 +53,23 @@ public class PlayerController : MonoBehaviour
         return true;
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.name.Equals("LevelBorder"))
+        if (other.gameObject.name.Equals("LevelPaths"))
         {
-            //Debug.Log("Autsch");
-            //direction = direction * -1;
-            //speed = Mathf.Max(0.5f, speed - 1);
+            SetTileColour(PlayerColor, Vector3Int.FloorToInt(transform.position), pathTilemap);
         }
+    }
+    
+    private void SetTileColour(Color colour, Vector3Int position, Tilemap tilemap)
+    {
+        // Flag the tile, inidicating that it can change colour.
+        // By default it's set to "Lock Colour".
+        tilemap.SetTileFlags(position, TileFlags.None);
+ 
+        // Set the colour.
+        tilemap.SetColor(position, colour);
     }
 
     private void FixedUpdate()
