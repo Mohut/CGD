@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour
     void Start() {
         _root = ingameUI.rootVisualElement;
         SetProgress(1, 100);
-        SetPhase(4);
+        SetPhase(3);
     }
 
     // Update is called once per frame

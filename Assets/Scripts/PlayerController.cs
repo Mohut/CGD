@@ -9,22 +9,23 @@ public class PlayerController : MonoBehaviour
     [Header("Player")]
     public Rigidbody2D controller;
 
-    public Color PlayerColor;
+   
     private Vector2 direction;
 
     public float speed;
     
     [Header("Map")]
     
-    [SerializeField]
-    private Tilemap pathTilemap;
-    [SerializeField]
-    private Tilemap borderTilemap;
+    
+    public Tilemap pathTilemap;
+    public Tilemap borderTilemap;
+
+    private SpriteRenderer spriteRenderer;
+ 
 
     private void Awake()
     {
-        //controller = gameObject.GetComponent<Rigidbody2D>();
-   
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
     
 
@@ -38,10 +39,26 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 direction = context.ReadValue<Vector2>();
         Vector2 check = new Vector2(0, 0);
+        
         if (!CanMove(direction) || direction == check ) return;
-        //Debug.Log("Move" + direction);
+        
         this.direction = (Vector3) direction;
+        
+        spriteRenderer.flipX = !(direction.x < 0);
 
+        switch(direction.y)
+        {
+            case -1:
+                transform.eulerAngles = new Vector3(0,0,-90);
+                break;
+            case 1:
+                transform.eulerAngles = new Vector3(0,0,90);
+                break;
+            default:
+                transform.eulerAngles = new Vector3(0,0,0);
+                break;
+        }
+       
     }
 
     private bool CanMove(Vector2 direction)
@@ -54,11 +71,12 @@ public class PlayerController : MonoBehaviour
     }
 
     
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.name.Equals("LevelPaths"))
         {
-            SetTileColour(PlayerColor, Vector3Int.FloorToInt(transform.position), pathTilemap);
+            Color playerColor = gameObject.GetComponent<PlayerDetails>().Color;
+            SetTileColour(playerColor, Vector3Int.FloorToInt(transform.position), pathTilemap);
         }
     }
     
@@ -74,16 +92,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //playedTime += Time.deltaTime;
-        //speed = Mathf.Min(speed + (1 / (playedTime * 10)), 3);
-        //transform.Translate((Vector3)(direction) * speed * Time.deltaTime);
-       
-        
-        //Debug.Log(pos);
         controller.MovePosition(controller.position + direction * speed * Time.fixedDeltaTime);
-        //controller.velocity = (Vector2) direction * speed * Time.deltaTime;
-        //Debug.Log("Move" + controller.velocity);
-        //controller.AddForce(direction*speed*Time.fixedDeltaTime, ForceMode2D.Force);
 
     }
 }
