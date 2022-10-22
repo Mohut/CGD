@@ -82,6 +82,7 @@ public class PlayerController : MonoBehaviour
     
     private void SetTileColour(Color colour, Vector3Int position, Tilemap tilemap)
     {
+        Debug.Log(position);
         // Flag the tile, inidicating that it can change colour.
         // By default it's set to "Lock Colour".
         tilemap.SetTileFlags(position, TileFlags.None);
