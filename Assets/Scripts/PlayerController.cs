@@ -1,28 +1,26 @@
+using System;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 public class PlayerController : MonoBehaviour
 {
-    
-    
     [Header("Player")]
+    [SerializeField] private FrontChecker frontChecker;
+
+    [SerializeField] private PlayerDetails playerDetails;
     public Rigidbody2D controller;
-
-   
     private Vector2 direction;
-
     public float speed;
-    
+
     [Header("Map")]
-    
-    
     public Tilemap pathTilemap;
     public Tilemap borderTilemap;
-
     private SpriteRenderer spriteRenderer;
- 
-
+    
     private void Awake()
     {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -43,8 +41,6 @@ public class PlayerController : MonoBehaviour
         if (!CanMove(direction) || direction == check ) return;
         
         this.direction = (Vector3) direction;
-        
-        spriteRenderer.flipX = !(direction.x < 0);
 
         switch(direction.y)
         {
@@ -55,10 +51,16 @@ public class PlayerController : MonoBehaviour
                 transform.eulerAngles = new Vector3(0,0,90);
                 break;
             default:
-                transform.eulerAngles = new Vector3(0,0,0);
+                if (direction.x < 0)
+                {
+                    transform.eulerAngles = new Vector3(0, 0, 180);
+                }
+                else
+                {
+                    transform.eulerAngles = new Vector3(0,0,0);
+                }
                 break;
         }
-       
     }
 
     private bool CanMove(Vector2 direction)
@@ -70,7 +72,16 @@ public class PlayerController : MonoBehaviour
         return true;
     }
 
-    
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.CompareTag("Player") == false)
+            return;
+
+        if (frontChecker.BehindPlayer == false || (col.gameObject.GetComponentInChildren<FrontChecker>().BehindPlayer && frontChecker.BehindPlayer))
+            Respawn();
+    }
+
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.name.Equals("LevelPaths"))
@@ -82,13 +93,17 @@ public class PlayerController : MonoBehaviour
     
     private void SetTileColour(Color colour, Vector3Int position, Tilemap tilemap)
     {
-        Debug.Log(position);
         // Flag the tile, inidicating that it can change colour.
         // By default it's set to "Lock Colour".
         tilemap.SetTileFlags(position, TileFlags.None);
  
         // Set the colour.
         tilemap.SetColor(position, colour);
+    }
+
+    private void Respawn()
+    {
+        transform.position = playerDetails.StartPos;
     }
 
     private void FixedUpdate()
