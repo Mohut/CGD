@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D controller;
     private Vector3 destination;
     private Vector3 newdestination;
+    private Vector3 olddestination;
     private Vector2 direction;
     public float speed;
 
@@ -33,16 +34,23 @@ public class PlayerController : MonoBehaviour
     {
         color = gameObject.GetComponent<PlayerDetails>().Color;
         destination = transform.position;
+        olddestination = transform.position;
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
         Vector2 direction = context.ReadValue<Vector2>();
-        Vector3 check = new Vector3(0,0, 0);
         Vector3 gridpos = CanMove(direction);
-        if (gridpos == check || direction == Vector2.zero ) return;
+        if (Vector3.Distance(gridpos, Vector3.zero) < 0.001f || Vector2.Distance(direction, Vector2.zero) < 0.001f) return;
         this.direction = direction;
         newdestination = gridpos;
+
+        if (Vector3.Distance(olddestination, newdestination) < Vector3.Distance(newdestination, destination))
+        {
+            olddestination = destination;
+            destination = newdestination;
+        }
+        
 
         switch(direction.y)
         {
@@ -110,15 +118,21 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log(destination);
-        if (Vector3.Distance(transform.position, destination) < Mathf.Epsilon)
+        if (Vector3.Distance(transform.position, destination) < 0.0001f)
         {
-            Debug.Log(newdestination);
-            if(newdestination != destination)
+            if (newdestination != destination)
+            {
+                
+                olddestination = destination;
                 destination = newdestination;
+                
+            }
             else
             {
-                destination = destination + (Vector3)direction;
+                Vector3 forward = CanMove(direction);
+                if (Vector3.Distance(forward, Vector3.zero) < 0.001f) return;
+                olddestination = destination;
+                destination += (Vector3)direction;
                 newdestination = destination;
             }
         }
