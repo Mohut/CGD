@@ -12,7 +12,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private FrontChecker frontChecker;
 
     [SerializeField] private PlayerDetails playerDetails;
+    private Color color;
     public Rigidbody2D controller;
+    private Vector3 destination;
+    private Vector3 newdestination;
     private Vector2 direction;
     public float speed;
 
@@ -25,22 +28,21 @@ public class PlayerController : MonoBehaviour
     {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
-    
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        //controls.Main.Movement.performed += ctx => Move(ctx.ReadValue<Vector2>());
+        color = gameObject.GetComponent<PlayerDetails>().Color;
+        destination = transform.position;
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
         Vector2 direction = context.ReadValue<Vector2>();
-        Vector2 check = new Vector2(0, 0);
-        
-        if (!CanMove(direction) || direction == check ) return;
-        
-        this.direction = (Vector3) direction;
+        Vector3 check = new Vector3(0,0, 0);
+        Vector3 gridpos = CanMove(direction);
+        if (gridpos == check || direction == Vector2.zero ) return;
+        this.direction = direction;
+        newdestination = gridpos;
 
         switch(direction.y)
         {
@@ -63,13 +65,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private bool CanMove(Vector2 direction)
+    private Vector3 CanMove(Vector2 direction)
     {
         Vector3Int gridPosition = pathTilemap.WorldToCell((transform.position + (Vector3)direction));
-       
-        if (direction == this.direction* -1 || !pathTilemap.HasTile(gridPosition) || borderTilemap.HasTile(gridPosition))
-            return false;
-        return true;
+
+        if (direction == this.direction * -1 || !pathTilemap.HasTile(gridPosition) ||
+            borderTilemap.HasTile(gridPosition))
+            return Vector3.zero;
+        return gridPosition + new Vector3(0.5f, 0.5f, 0);
     }
 
 
@@ -86,8 +89,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.name.Equals("LevelPaths"))
         {
-            Color playerColor = gameObject.GetComponent<PlayerDetails>().Color;
-            SetTileColour(playerColor, Vector3Int.FloorToInt(transform.position), pathTilemap);
+            SetTileColour(color, Vector3Int.FloorToInt(transform.position), pathTilemap);
         }
     }
     
@@ -108,7 +110,25 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        controller.MovePosition(controller.position + direction * speed * Time.fixedDeltaTime);
-
+        Debug.Log(destination);
+        if (Vector3.Distance(transform.position, destination) < Mathf.Epsilon)
+        {
+            Debug.Log(newdestination);
+            if(newdestination != destination)
+                destination = newdestination;
+            else
+            {
+                destination = destination + (Vector3)direction;
+                newdestination = destination;
+            }
+        }
+        else
+        {
+            //controller.MovePosition(controller.position + direction * speed * Time.fixedDeltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, destination,
+                speed * Time.deltaTime);
+            
+        }
+       
     }
 }
