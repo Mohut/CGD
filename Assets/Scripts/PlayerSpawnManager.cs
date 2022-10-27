@@ -18,7 +18,6 @@ public class PlayerSpawnManager : MonoBehaviour
     
     public void OnPlayerJoined(PlayerInput playerInput)
     {
-
         PlayerDetails newPlayer = playerInput.gameObject.GetComponent<PlayerDetails>();
         PlayerController playerController = playerInput.gameObject.GetComponent<PlayerController>();
         // Set the player ID, add one to the index to start at Player 1

@@ -32,9 +32,10 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        color = gameObject.GetComponent<PlayerDetails>().Color;
-        destination = transform.position;
-        olddestination = transform.position;
+        color = playerDetails.Color;
+        destination = playerDetails.StartPos;
+        olddestination = destination;
+        newdestination = destination;
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -114,6 +115,9 @@ public class PlayerController : MonoBehaviour
     private void Respawn()
     {
         transform.position = playerDetails.StartPos;
+        destination = playerDetails.StartPos;
+        olddestination = destination;
+        newdestination = destination;
     }
 
     private void FixedUpdate()
