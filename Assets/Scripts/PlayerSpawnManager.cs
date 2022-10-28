@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,8 @@ public class PlayerSpawnManager : MonoBehaviour
     
     [SerializeField]
     private Color[] colors;
+
+    public Action<int, PlayerController> onPlayerSpawn;
     
     public void OnPlayerJoined(PlayerInput playerInput)
     {
@@ -31,5 +34,6 @@ public class PlayerSpawnManager : MonoBehaviour
 
         playerController.borderTilemap = borderTilemap;
         playerController.pathTilemap = pathTilemap;
+        onPlayerSpawn?.Invoke(newPlayer.PlayerID, playerController);
     }
 }

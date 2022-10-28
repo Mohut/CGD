@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
     public Tilemap pathTilemap;
     public Tilemap borderTilemap;
     private SpriteRenderer spriteRenderer;
+
+    public Action<int, Vector3, Color> onTileColored;
     
     private void Awake()
     {
@@ -51,27 +53,27 @@ public class PlayerController : MonoBehaviour
             olddestination = destination;
             destination = newdestination;
         }
-        
 
-        switch(direction.y)
-        {
-            case -1:
-                transform.eulerAngles = new Vector3(0,0,-90);
-                break;
-            case 1:
-                transform.eulerAngles = new Vector3(0,0,90);
-                break;
-            default:
-                if (direction.x < 0)
-                {
-                    transform.eulerAngles = new Vector3(0, 0, 180);
-                }
-                else
-                {
-                    transform.eulerAngles = new Vector3(0,0,0);
-                }
-                break;
-        }
+
+        // if (direction.x < 0)
+        //     transform.eulerAngles = new Vector3(0, 180, transform.eulerAngles.z);
+        // else
+        // {
+        //     transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
+        // }
+        // switch(direction.y)
+        // {
+        //     case -1:
+        //         transform.eulerAngles = new Vector3(0,transform.eulerAngles.y,-90);
+        //         break;
+        //     case 1:
+        //         transform.eulerAngles = new Vector3(0,transform.eulerAngles.y,90);
+        //         break;
+        //     default:
+        //         transform.eulerAngles = new Vector3(0,transform.eulerAngles.y,0);
+        //       
+        //         break;
+        // }
     }
 
     private Vector3 CanMove(Vector2 direction)
@@ -107,9 +109,11 @@ public class PlayerController : MonoBehaviour
         // Flag the tile, inidicating that it can change colour.
         // By default it's set to "Lock Colour".
         tilemap.SetTileFlags(position, TileFlags.None);
- 
+        Color before = tilemap.GetColor(position);
         // Set the colour.
         tilemap.SetColor(position, colour);
+        
+        onTileColored?.Invoke(playerDetails.PlayerID, position, before);
     }
 
     private void Respawn()
@@ -139,6 +143,8 @@ public class PlayerController : MonoBehaviour
                 destination += (Vector3)direction;
                 newdestination = destination;
             }
+            
+            transform.right = destination - transform.position;
         }
         else
         {

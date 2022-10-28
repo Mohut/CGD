@@ -454,8 +454,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tm: {fileID: 1198939335}
-  mapX: 18
-  mapY: 28
+  _spawnManager: {fileID: 256528956}
+  ZoneMiddlePoints:
+  - {x: -9, y: -3, z: 0}
+  - {x: 0, y: -3, z: 0}
+  - {x: 10, y: -3, z: 0}
+  - {x: -9, y: -12, z: 0}
+  - {x: 0, y: -12, z: 0}
+  - {x: 10, y: -12, z: 0}
+  ZoneSizes:
+  - {x: 9, y: 9, z: 1}
+  - {x: 10, y: 9, z: 1}
+  - {x: 9, y: 9, z: 1}
+  - {x: 9, y: 9, z: 1}
+  - {x: 10, y: 9, z: 1}
+  - {x: 9, y: 9, z: 1}
 --- !u!1 &609245735
 GameObject:
   m_ObjectHideFlags: 0

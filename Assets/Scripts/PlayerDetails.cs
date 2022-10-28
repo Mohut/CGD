@@ -12,7 +12,7 @@ public class PlayerDetails : MonoBehaviour
     void Start()
     {
         transform.position = StartPos;
-        gameObject.GetComponent<SpriteRenderer>().flipX = !(transform.position.x > 0);
+        //gameObject.GetComponent<SpriteRenderer>().flipX = !(transform.position.x > 0);
 
        
         gameObject.GetComponent<SpriteRenderer>().color = Color;
