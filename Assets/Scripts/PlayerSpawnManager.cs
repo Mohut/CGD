@@ -17,7 +17,10 @@ public class PlayerSpawnManager : MonoBehaviour
     [SerializeField]
     private Color[] colors;
 
+    public Dictionary<Color, int> PlayerColorDictionary = new Dictionary<Color, int>();
+
     public Action<int, PlayerController> onPlayerSpawn;
+    
     
     public void OnPlayerJoined(PlayerInput playerInput)
     {
@@ -31,6 +34,7 @@ public class PlayerSpawnManager : MonoBehaviour
 
         // Set color of player
         newPlayer.Color = colors[playerInput.playerIndex];
+        PlayerColorDictionary[newPlayer.Color] = newPlayer.PlayerID;
 
         playerController.borderTilemap = borderTilemap;
         playerController.pathTilemap = pathTilemap;
