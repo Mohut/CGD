@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="root" style="width: 100%; height: 100%; align-items: center; justify-content: center; display: flex;">
+        <ui:IMGUIContainer style="width: 50%; height: 60%; background-color: rgb(75, 75, 75); justify-content: space-around; align-items: center;">
+            <ui:Label text="Player Duc Wins" display-tooltip-when-elided="true" name="WinText" style="font-size: 60px;" />
+            <ui:Button text="Play Again" display-tooltip-when-elided="true" name="PlayAgainButton" style="width: 50%; height: 50%; font-size: 30px;" />
+        </ui:IMGUIContainer>
+    </ui:VisualElement>
+</ui:UXML>
