@@ -7,7 +7,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public delegate void gameOverHandler();
+    public delegate void gameOverHandler(int playerIndex);
     public event gameOverHandler gameOverEvent;
     void Awake()
     {
@@ -21,8 +21,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GameOver()
+    public void GameOver(int playerIndex)
     {
-        gameOverEvent?.Invoke();
+        gameOverEvent?.Invoke(playerIndex);
     }
 }

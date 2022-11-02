@@ -48,7 +48,7 @@ public class ScoreManager : MonoBehaviour
         PlayerScores[playerid] += score;
         onPlayerScoreChange?.Invoke(playerid, PlayerScores[playerid]);
         if(PlayerScores[playerid] >= pointsToWin)
-            GameManager.Instance.GameOver();
+            GameManager.Instance.GameOver(playerid);
     }
 
     public void SetLead(int playerid)

@@ -15,10 +15,10 @@ public class GameOverScreenManager : MonoBehaviour
         root = gameOverDocument.rootVisualElement;
         root.Q<Button>("PlayAgainButton").clicked += Restart;
         GameManager.Instance.gameOverEvent += ShowScreen;
-        root.style.display = DisplayStyle.None;
+        root.Q("GameOverScreen").style.display = DisplayStyle.None;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         root.Q<Button>("PlayAgainButton").clicked -= Restart;
         GameManager.Instance.gameOverEvent -= ShowScreen;
@@ -29,9 +29,9 @@ public class GameOverScreenManager : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
-    private void ShowScreen()
+    private void ShowScreen(int playerIndex)
     {
-        Debug.Log("shwo");
-        root.style.display = DisplayStyle.Flex;
+        root.Q("GameOverScreen").style.display = DisplayStyle.Flex;
+        root.Q<Label>("WinText").text = "Player " + playerIndex + " Wins!";
     }
 }
