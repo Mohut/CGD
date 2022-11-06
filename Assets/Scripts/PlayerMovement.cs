@@ -35,6 +35,15 @@ public partial class @PlayerMovement : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press"",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""StartGame"",
+                    ""type"": ""Button"",
+                    ""id"": ""f9ea3c82-198a-4be7-b9df-1b6bcb2ae3b9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -162,7 +171,7 @@ public partial class @PlayerMovement : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""up"",
                     ""id"": ""951b2b06-c2c7-4db7-bf18-2bfdf07934e8"",
-                    ""path"": ""<XInputController>/buttonNorth"",
+                    ""path"": ""<Gamepad>/dpad/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -173,7 +182,7 @@ public partial class @PlayerMovement : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""down"",
                     ""id"": ""d816e92e-c97d-4730-a34c-9f44f0ea465a"",
-                    ""path"": ""<XInputController>/buttonSouth"",
+                    ""path"": ""<Gamepad>/dpad/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -184,7 +193,7 @@ public partial class @PlayerMovement : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""897e42f7-fd8e-4a4e-b5b6-d8d386f5f21c"",
-                    ""path"": ""<XInputController>/buttonWest"",
+                    ""path"": ""<Gamepad>/dpad/left"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -195,13 +204,35 @@ public partial class @PlayerMovement : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""right"",
                     ""id"": ""76709f2f-700f-4814-a01d-9f0c593176a1"",
-                    ""path"": ""<XInputController>/buttonEast"",
+                    ""path"": ""<Gamepad>/dpad/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2da380ea-476e-4e57-8267-38130942b9df"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StartGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bff0732f-dd45-4f0d-b42d-5e4c1e20a38e"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StartGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -211,6 +242,7 @@ public partial class @PlayerMovement : IInputActionCollection2, IDisposable
         // Main
         m_Main = asset.FindActionMap("Main", throwIfNotFound: true);
         m_Main_Movement = m_Main.FindAction("Movement", throwIfNotFound: true);
+        m_Main_StartGame = m_Main.FindAction("StartGame", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -271,11 +303,13 @@ public partial class @PlayerMovement : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Main;
     private IMainActions m_MainActionsCallbackInterface;
     private readonly InputAction m_Main_Movement;
+    private readonly InputAction m_Main_StartGame;
     public struct MainActions
     {
         private @PlayerMovement m_Wrapper;
         public MainActions(@PlayerMovement wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Main_Movement;
+        public InputAction @StartGame => m_Wrapper.m_Main_StartGame;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -288,6 +322,9 @@ public partial class @PlayerMovement : IInputActionCollection2, IDisposable
                 @Movement.started -= m_Wrapper.m_MainActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnMovement;
+                @StartGame.started -= m_Wrapper.m_MainActionsCallbackInterface.OnStartGame;
+                @StartGame.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnStartGame;
+                @StartGame.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnStartGame;
             }
             m_Wrapper.m_MainActionsCallbackInterface = instance;
             if (instance != null)
@@ -295,6 +332,9 @@ public partial class @PlayerMovement : IInputActionCollection2, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
+                @StartGame.started += instance.OnStartGame;
+                @StartGame.performed += instance.OnStartGame;
+                @StartGame.canceled += instance.OnStartGame;
             }
         }
     }
@@ -302,5 +342,6 @@ public partial class @PlayerMovement : IInputActionCollection2, IDisposable
     public interface IMainActions
     {
         void OnMovement(InputAction.CallbackContext context);
+        void OnStartGame(InputAction.CallbackContext context);
     }
 }

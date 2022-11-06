@@ -297,6 +297,8 @@ MonoBehaviour:
       remapped: 15
     - original: 18
       remapped: 18
+    - original: 1
+      remapped: 1
   - name: Player2
     routes:
     - original: 37
@@ -307,6 +309,8 @@ MonoBehaviour:
       remapped: 61
     - original: 18
       remapped: 62
+    - original: 1
+      remapped: 1
 --- !u!114 &256528954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,10 +336,10 @@ MonoBehaviour:
   m_JoinAction:
     m_UseReference: 0
     m_Action:
-      m_Name: 
+      m_Name: Join
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 
+      m_Id: a5557926-deb6-47ac-b951-37209f2f8d9d
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -414,7 +418,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 378809138}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.5, y: 4.5, z: 0}
+  m_LocalPosition: {x: -7.43, y: -10.44, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1002,7 +1006,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 971151039}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.5, y: -10.5, z: 0}
+  m_LocalPosition: {x: 17.5, y: 4.48, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8817,7 +8821,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1250463574}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.5, y: -10.5, z: 0}
+  m_LocalPosition: {x: 17.55, y: -10.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
