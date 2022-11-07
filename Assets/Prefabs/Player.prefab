@@ -407,6 +407,8 @@ MonoBehaviour:
   frontChecker: {fileID: 7036237488806000881}
   playerDetails: {fileID: 7665674250008251990}
   controller: {fileID: 1244215213366936261}
+  speedBoostThreshold: 0.2
+  speedBoost: 0.1
   speed: 2
   pathTilemap: {fileID: 0}
   borderTilemap: {fileID: 0}

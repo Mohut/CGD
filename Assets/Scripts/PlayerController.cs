@@ -18,7 +18,10 @@ public class PlayerController : MonoBehaviour
     private Vector3 newdestination;
     private Vector3 olddestination;
     private Vector2 direction;
+    [SerializeField] private float speedBoostThreshold;
+    [SerializeField] private float speedBoost;
     public float speed;
+    private float initialSpeed;
 
     [Header("Map")]
     public Tilemap pathTilemap;
@@ -38,21 +41,39 @@ public class PlayerController : MonoBehaviour
         destination = playerDetails.StartPos;
         olddestination = destination;
         newdestination = destination;
+        initialSpeed = speed;
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
         Vector2 direction = context.ReadValue<Vector2>();
         Vector3 gridpos = CanMove(direction);
-        if (Vector3.Distance(gridpos, Vector3.zero) < 0.001f || Vector2.Distance(direction, Vector2.zero) < 0.001f) return;
+        if (Vector3.Distance(gridpos, Vector3.zero) < 0.001f || Vector2.Distance(direction, Vector2.zero) < 0.001f)
+        {
+            speed = initialSpeed;
+            return;
+        }
         this.direction = direction;
         newdestination = gridpos;
 
         if (Vector3.Distance(olddestination, newdestination) < Vector3.Distance(newdestination, destination))
         {
-            olddestination = destination;
+            transform.position = olddestination;
             destination = newdestination;
+            transform.right = destination - transform.position;
         }
+        
+
+        if (Vector3.Distance(transform.position, olddestination) < speedBoostThreshold ||
+            Vector3.Distance(transform.position, destination) < speedBoostThreshold)
+        {
+            speed += speedBoost;
+        }
+        else
+        {
+            speed = initialSpeed;
+        }
+        
 
 
         // if (direction.x < 0)
