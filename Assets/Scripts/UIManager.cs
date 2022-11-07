@@ -12,15 +12,26 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start() {
         _root = ingameUI.rootVisualElement;
+        
         SetProgress(1, 0);
         SetProgress(2, 0);
         SetPhase(3);
-        ScoreManager.Instance.onPlayerScoreChange += SetProgress;
-    }
-
-    // Update is called once per frame
-    void Update() {
         
+        ScoreManager.Instance.onPlayerScoreChange += SetProgress;
+
+        _root.Q<ProgressBar>("Player1Progress").Q<Label>().text = "Red";
+        _root.Q<ProgressBar>("Player2Progress").Q<Label>().text = "Green";
+        _root.Q<ProgressBar>("Player3Progress").Q<Label>().text = "Blue";
+        _root.Q<ProgressBar>("Player4Progress").Q<Label>().text = "Yellow";
+    }
+    
+    void Update()
+    {
+        if (GameManager.Instance.GameStarted == false)
+            return;
+        
+        if (_root.Q("GameStartScreen").style.display.value == DisplayStyle.Flex)
+            _root.Q("GameStartScreen").style.display = DisplayStyle.None;
     }
 
 

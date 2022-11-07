@@ -6,7 +6,7 @@ using UnityEngine;
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance;
-    
+
     public Dictionary<int, float> PlayerScores = new Dictionary<int, float>();
 
     public PlayerSpawnManager SpawnManager;
@@ -14,7 +14,8 @@ public class ScoreManager : MonoBehaviour
     private Dictionary<int, bool> LeadPlayer = new Dictionary<int, bool>();
 
     public Action<int, float> onPlayerScoreChange;
-
+    
+    [SerializeField] private int pointsToWin;
     [SerializeField] private float _scoreIntervall;
     [SerializeField] private float _scorePerIntervall;
 
@@ -46,6 +47,8 @@ public class ScoreManager : MonoBehaviour
     {
         PlayerScores[playerid] += score;
         onPlayerScoreChange?.Invoke(playerid, PlayerScores[playerid]);
+        if(PlayerScores[playerid] >= pointsToWin)
+            GameManager.Instance.GameOver(playerid);
     }
 
     public void SetLead(int playerid)

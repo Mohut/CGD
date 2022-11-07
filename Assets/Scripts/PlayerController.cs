@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Player")]
     [SerializeField] private FrontChecker frontChecker;
-
     [SerializeField] private PlayerDetails playerDetails;
     private Color color;
     public Rigidbody2D controller;
@@ -42,6 +41,51 @@ public class PlayerController : MonoBehaviour
         olddestination = destination;
         newdestination = destination;
         initialSpeed = speed;
+    }
+    
+    private void FixedUpdate()
+    {
+        if (GameManager.Instance.GameStarted == false)
+            return;
+        
+        if (Vector3.Distance(transform.position, destination) < 0.0001f)
+        {
+            if (newdestination != destination)
+            {
+                
+                olddestination = destination;
+                destination = newdestination;
+                
+            }
+            else
+            {
+                Vector3 forward = CanMove(direction);
+                if (Vector3.Distance(forward, Vector3.zero) < 0.001f) return;
+                olddestination = destination;
+                destination += (Vector3)direction;
+                newdestination = destination;
+            }
+            
+            transform.right = destination - transform.position;
+        }
+        else
+        {
+            //controller.MovePosition(controller.position + direction * speed * Time.fixedDeltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, destination,
+                speed * Time.deltaTime);
+            
+        }
+    }
+
+    public void StartGame(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (GameManager.Instance.GameStarted)
+                return;
+            
+            GameManager.Instance.GameStarted = true;
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -143,37 +187,5 @@ public class PlayerController : MonoBehaviour
         destination = playerDetails.StartPos;
         olddestination = destination;
         newdestination = destination;
-    }
-
-    private void FixedUpdate()
-    {
-        if (Vector3.Distance(transform.position, destination) < 0.0001f)
-        {
-            if (newdestination != destination)
-            {
-                
-                olddestination = destination;
-                destination = newdestination;
-                
-            }
-            else
-            {
-                Vector3 forward = CanMove(direction);
-                if (Vector3.Distance(forward, Vector3.zero) < 0.001f) return;
-                olddestination = destination;
-                destination += (Vector3)direction;
-                newdestination = destination;
-            }
-            
-            transform.right = destination - transform.position;
-        }
-        else
-        {
-            //controller.MovePosition(controller.position + direction * speed * Time.fixedDeltaTime);
-            transform.position = Vector3.MoveTowards(transform.position, destination,
-                speed * Time.deltaTime);
-            
-        }
-       
     }
 }
