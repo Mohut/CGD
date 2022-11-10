@@ -8,6 +8,11 @@ public class PlayerDetails : MonoBehaviour
     public Vector3 StartPos;
 
     public Color Color;
+
+    
+    public int MaxFields;
+
+    public int CurrentFields;
     // Start is called before the first frame update
     void Start()
     {

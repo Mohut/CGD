@@ -117,28 +117,7 @@ public class PlayerController : MonoBehaviour
         {
             speed = initialSpeed;
         }
-        
-
-
-        // if (direction.x < 0)
-        //     transform.eulerAngles = new Vector3(0, 180, transform.eulerAngles.z);
-        // else
-        // {
-        //     transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
-        // }
-        // switch(direction.y)
-        // {
-        //     case -1:
-        //         transform.eulerAngles = new Vector3(0,transform.eulerAngles.y,-90);
-        //         break;
-        //     case 1:
-        //         transform.eulerAngles = new Vector3(0,transform.eulerAngles.y,90);
-        //         break;
-        //     default:
-        //         transform.eulerAngles = new Vector3(0,transform.eulerAngles.y,0);
-        //       
-        //         break;
-        // }
+    
     }
 
     private Vector3 CanMove(Vector2 direction)
@@ -146,7 +125,7 @@ public class PlayerController : MonoBehaviour
         Vector3Int gridPosition = pathTilemap.WorldToCell((transform.position + (Vector3)direction));
 
         if (direction == this.direction * -1 || !pathTilemap.HasTile(gridPosition) ||
-            borderTilemap.HasTile(gridPosition))
+            borderTilemap.HasTile(gridPosition) )
             return Vector3.zero;
         return gridPosition + new Vector3(0.5f, 0.5f, 0);
     }
@@ -171,10 +150,16 @@ public class PlayerController : MonoBehaviour
     
     private void SetTileColour(Color colour, Vector3Int position, Tilemap tilemap)
     {
+        if (playerDetails.CurrentFields <= 0) 
+            return;
+        
+       
         // Flag the tile, inidicating that it can change colour.
         // By default it's set to "Lock Colour".
         tilemap.SetTileFlags(position, TileFlags.None);
         Color before = tilemap.GetColor(position);
+        if(before != playerDetails.Color)
+            playerDetails.CurrentFields--;
         // Set the colour.
         tilemap.SetColor(position, colour);
         
