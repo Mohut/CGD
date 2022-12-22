@@ -142,7 +142,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.name.Equals("LevelPaths"))
+        if (other.gameObject.CompareTag("LevelPath"))
         {
             SetTileColour(color, Vector3Int.FloorToInt(transform.position), pathTilemap);
         }

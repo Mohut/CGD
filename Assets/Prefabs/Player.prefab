@@ -482,6 +482,7 @@ MonoBehaviour:
   Color: {r: 0, g: 0, b: 0, a: 0}
   MaxFields: 5
   CurrentFields: 5
+  spriteRenderer: {fileID: 1244215213366936257}
 --- !u!1 &1580664273593643508
 GameObject:
   m_ObjectHideFlags: 0
