@@ -7,6 +7,7 @@ using UnityEngine.Tilemaps;
 
 public class PlayerSpawnManager : MonoBehaviour
 {
+    [SerializeField] private PlayerManager _playerManager;
     [SerializeField]
     private Tilemap pathTilemap;
     [SerializeField]
@@ -39,5 +40,6 @@ public class PlayerSpawnManager : MonoBehaviour
         playerController.borderTilemap = borderTilemap;
         playerController.pathTilemap = pathTilemap;
         onPlayerSpawn?.Invoke(newPlayer.PlayerID, playerController);
+        _playerManager.OnPlayerJoined();
     }
 }

@@ -77,17 +77,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void StartGame(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            if (GameManager.Instance.GameStarted)
-                return;
-            
-            GameManager.Instance.GameStarted = true;
-        }
-    }
-
     public void OnMove(InputAction.CallbackContext context)
     {
         Vector2 direction = context.ReadValue<Vector2>();

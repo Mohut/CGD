@@ -36,6 +36,11 @@ public class TilemapZoneManager : MonoBehaviour
         _spawnManager.onPlayerSpawn += RegisterPlayer;
     }
 
+    private void OnDestroy()
+    {
+        _spawnManager.onPlayerSpawn -= RegisterPlayer;
+    }
+
     private void RegisterPlayer(int id, PlayerController controller)
     {
         controller.onTileColored += UpdateTileZones;
