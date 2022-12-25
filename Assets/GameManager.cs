@@ -26,6 +26,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        Time.timeScale = 1;
+    }
+
     public void GameOver(int playerIndex)
     {
         gameOverEvent?.Invoke(playerIndex);
