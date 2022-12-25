@@ -33,8 +33,8 @@ public class PlayerManager : MonoBehaviour
                 player3Image.SetActive(true);
                 break;
             case 4:
-                player1Text.SetText("Player 4 ready");
-                player3Image.SetActive(true);
+                player4Text.SetText("Player 4 ready");
+                player4Image.SetActive(true);
                 break;
         }
 

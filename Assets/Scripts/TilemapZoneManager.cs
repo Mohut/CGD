@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Mono.Cecil.Cil;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -94,17 +95,12 @@ public class TilemapZoneManager : MonoBehaviour
                         SetZoneOwner(id, i);
                     }
                 }
-                
-                
-                
             }
-            
         }
     }
 
     private void ColorWalls(int zoneid, int playerid, Color? color=null)
     {
-        
         Color playercolor = color!=null ? color.Value : _spawnManager.PlayerColorDictionary.FirstOrDefault(x => x.Value == playerid).Key;
         Vector3 middle = ZoneBounds[zoneid].center;
         Bounds BoundsForTilemap =
@@ -198,7 +194,6 @@ public class TilemapZoneManager : MonoBehaviour
                     map.SetTileFlags(worldCoords, TileFlags.None);
                     map.SetColor(worldCoords, color);
                     map.RefreshTile(worldCoords);
-
                 }
             }
         }
