@@ -129,7 +129,11 @@ public class PlayerController : MonoBehaviour
             return;
 
         if (frontChecker.BehindPlayer == false || (col.gameObject.GetComponentInChildren<FrontChecker>().BehindPlayer && frontChecker.BehindPlayer))
+        {
             Respawn();
+            SoundManager.Instance.PlayPlayerHitSound();
+        }
+            
     }
 
     private void OnTriggerExit2D(Collider2D other)
