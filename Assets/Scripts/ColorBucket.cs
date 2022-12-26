@@ -6,6 +6,7 @@ public class ColorBucket : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player") == false)
             return;
+        SoundManager.Instance.PlayColorRefillSound();
         PlayerDetails playerDetails = col.gameObject.GetComponentInChildren<PlayerDetails>();
         playerDetails.CurrentFields = playerDetails.MaxFields;
     }

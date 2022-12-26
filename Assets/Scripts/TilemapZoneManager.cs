@@ -113,6 +113,7 @@ public class TilemapZoneManager : MonoBehaviour
     {
         ZoneOwner[zone] = playerid;
         ColorWalls(zone, playerid);
+        SoundManager.Instance.PlayZoneTakenSound();
         CheckZoneProgress();
     }
 
