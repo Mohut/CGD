@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using UnityEngine;
 
-public enum LogId {Heatmap, SpeedPercentage, ZoneTakenTime, ItemUsage, PlayerAheadTime, PlayerHit}
+public enum LogId {Heatmap, SpeedPercentage, ZoneTakenTime, ItemUsage, PlayerAheadTime, PlayerHit, Other}
 public class Logger : MonoBehaviour
 {
     public static Logger Instance;
@@ -38,6 +38,7 @@ public class Logger : MonoBehaviour
         {
             if(Directory.Exists(Application.persistentDataPath + "/" + DateTime.Today.ToString("d")) == false)
                 Directory.CreateDirectory(Application.persistentDataPath + "/" + DateTime.Today.ToString("d"));
+            
             StreamWriter writer = new StreamWriter(Application.persistentDataPath + "/" + DateTime.Today.ToString("d") + "/Balance-logs " + startTime + ".txt", true);
             writer.WriteLine(time + "," + id + "," + message);
             writer.Close();

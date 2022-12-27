@@ -1,9 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -11,8 +7,10 @@ public class GameManager : MonoBehaviour
     public delegate void gameOverHandler(int playerIndex);
     public event gameOverHandler gameOverEvent;
     private bool gameStarted;
+    private int playerCount = 0;
 
     public bool GameStarted { get => gameStarted; set => gameStarted = value; }
+    public int PlayerCount { get => playerCount; set => playerCount = value; }
 
     void Awake()
     {
@@ -34,5 +32,12 @@ public class GameManager : MonoBehaviour
     public void GameOver(int playerIndex)
     {
         gameOverEvent?.Invoke(playerIndex);
+        LogResult(playerIndex);
+    }
+
+    private void LogResult(int winnerId)
+    {
+        Logger.Instance.WriteToFile(LogId.Other, playerCount + " players played");
+        Logger.Instance.WriteToFile(LogId.Other, "player" + winnerId + " won");
     }
 }

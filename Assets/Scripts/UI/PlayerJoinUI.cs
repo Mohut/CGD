@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerJoinUI : MonoBehaviour
 {
     [SerializeField] private Button startButton;
     [SerializeField] private TextMeshProUGUI player1Text;
@@ -13,12 +13,11 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private GameObject player3Image;
     [SerializeField] private TextMeshProUGUI player4Text;
     [SerializeField] private GameObject player4Image;
-    private int playerCount = 0;
-    
+
     public void OnPlayerJoined()
     {
-        playerCount++;
-        switch (playerCount)
+        GameManager.Instance.PlayerCount++;
+        switch (GameManager.Instance.PlayerCount)
         {
             case 1:
                 player1Text.SetText("Player 1 ready");
@@ -38,7 +37,7 @@ public class PlayerManager : MonoBehaviour
                 break;
         }
 
-        if (playerCount >= 2)
+        if (GameManager.Instance.PlayerCount >= 2)
         {
             startButton.interactable = true;
         }

@@ -10,10 +10,22 @@ public class InGameUI : MonoBehaviour
     void Start()
     {
         ScoreManager.Instance.onPlayerScoreChange += SetProgress;
+        GameManager.Instance.gameOverEvent += LogPlayerProgression;
+
+        if (GameManager.Instance.PlayerCount == 2)
+            return;
+
+        slider3.gameObject.SetActive(true);
+
+        if (GameManager.Instance.PlayerCount == 3)
+            return;
+
+        slider4.gameObject.SetActive(true);
     }
     private void OnDestroy()
     {
         ScoreManager.Instance.onPlayerScoreChange -= SetProgress;
+        GameManager.Instance.gameOverEvent -= LogPlayerProgression;
     }
 
     private void SetProgress(int player, float progress)
@@ -33,5 +45,21 @@ public class InGameUI : MonoBehaviour
                 slider4.value = progress;
                 break;
         }
+    }
+
+    private void LogPlayerProgression(int noInt)
+    {
+        Logger.Instance.WriteToFile(LogId.PlayerAheadTime, "Player1 progress: " + slider1.value);
+        Logger.Instance.WriteToFile(LogId.PlayerAheadTime, "Player2 progress: " + slider2.value);
+
+        if (GameManager.Instance.PlayerCount == 2)
+            return;
+        
+        Logger.Instance.WriteToFile(LogId.PlayerAheadTime, "Player3 progress: " + slider3.value);
+
+        if (GameManager.Instance.PlayerCount == 3)
+            return;
+        
+        Logger.Instance.WriteToFile(LogId.PlayerAheadTime, "Player4 progress: " + slider4.value);
     }
 }

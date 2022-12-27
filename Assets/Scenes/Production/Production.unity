@@ -444,7 +444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2bff3c36f0de6845a45b1942f28d259, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerManager: {fileID: 1746121044}
+  playerJoinUI: {fileID: 1746121044}
   pathTilemap: {fileID: 1198939335}
   borderTilemap: {fileID: 2055439295}
   spawnLocations:

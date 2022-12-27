@@ -132,6 +132,7 @@ public class PlayerController : MonoBehaviour
         {
             Respawn();
             SoundManager.Instance.PlayPlayerHitSound();
+            Logger.Instance.WriteToFile(LogId.PlayerHit, "Player" + gameObject.GetComponent<PlayerDetails>().PlayerID + " hit Player" + gameObject.GetComponent<PlayerDetails>().PlayerID);
         }
             
     }
@@ -168,5 +169,6 @@ public class PlayerController : MonoBehaviour
         destination = playerDetails.StartPos;
         olddestination = destination;
         newdestination = destination;
+        direction = Vector2.zero;
     }
 }
