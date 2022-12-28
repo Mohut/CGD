@@ -4,6 +4,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public PlayerSpawnManager SpawnManager;
+    public TilemapZoneManager ZoneManager;
     public delegate void gameOverHandler(int playerIndex);
     public event gameOverHandler gameOverEvent;
     private bool gameStarted;

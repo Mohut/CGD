@@ -62,6 +62,12 @@ public class TilemapZoneManager : MonoBehaviour
         }
     }
 
+    public Bounds ConvertBoundsToTilemapBounds(Bounds bounds)
+    {
+        // tilemapbounds are computed different, the "center" is actually the bottom left corner
+        return new Bounds(new Vector3(0,0,0), new Vector3(0, 0, 0));
+    }
+
 
     public void UpdateTileZones(int id, Vector3 tilepos, Color previous)
     {
@@ -172,7 +178,7 @@ public class TilemapZoneManager : MonoBehaviour
         return counter;
     }
     
-    private void ColorAllTiles(Tilemap map, Bounds bounds, Color color )
+    public void ColorAllTiles(Tilemap map, Bounds bounds, Color color, Action<Color, Vector3Int> callback = null)
     {
         BoundsInt boundsInt = new BoundsInt(Vector3Int.FloorToInt(bounds.center), Vector3Int.FloorToInt(bounds.size));
         
@@ -190,19 +196,20 @@ public class TilemapZoneManager : MonoBehaviour
                     Vector3Int gridPlace = new Vector3Int(
                         x + boundsInt.xMin, y + boundsInt.yMin, boundsInt.z);
                     Vector3 worldPlace = map.CellToWorld(gridPlace);
+                    
+                    Debug.Log("Tile: " + worldPlace);
                     // do something
                     Vector3Int worldCoords = Vector3Int.FloorToInt(worldPlace);
                     map.SetTileFlags(worldCoords, TileFlags.None);
                     map.SetColor(worldCoords, color);
                     map.RefreshTile(worldCoords);
+                    if (callback != null)
+                    {
+                        callback(color, worldCoords);
+                    }
                 }
             }
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }

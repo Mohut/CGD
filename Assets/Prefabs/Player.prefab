@@ -426,6 +426,8 @@ MonoBehaviour:
   speedBoostThreshold: 0.2
   speedBoost: 0.1
   speed: 2
+  items:
+  - {fileID: 11400000, guid: 760caefa922e3ca4ea8bec867620ddad, type: 2}
   pathTilemap: {fileID: 0}
   borderTilemap: {fileID: 0}
 --- !u!50 &1244215213366936261

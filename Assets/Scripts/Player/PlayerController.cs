@@ -1,5 +1,6 @@
 using System;
 using System.Numerics;
+using Items;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
@@ -21,11 +22,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speedBoost;
     public float speed;
     private float initialSpeed;
+    public Item[] items;
 
     [Header("Map")]
     public Tilemap pathTilemap;
     public Tilemap borderTilemap;
     private SpriteRenderer spriteRenderer;
+
+    private bool used = false;
+    private float passed = 0;
 
     public Action<int, Vector3, Color> onTileColored;
     
@@ -41,6 +46,7 @@ public class PlayerController : MonoBehaviour
         olddestination = destination;
         newdestination = destination;
         initialSpeed = speed;
+        
     }
     
     private void FixedUpdate()
@@ -77,8 +83,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void useItem()
+    {
+        if (items.Length > 0)
+        {
+            items[0].TriggerEffect(gameObject);
+        }
+    }
+
     public void OnMove(InputAction.CallbackContext context)
     {
+        useItem();
         if (GameManager.Instance.GameStarted == false)
             return;
     
@@ -99,7 +114,7 @@ public class PlayerController : MonoBehaviour
             transform.right = destination - transform.position;
         }
         
-
+        // Apply Speedboost or reset
         if (Vector3.Distance(transform.position, olddestination) < speedBoostThreshold ||
             Vector3.Distance(transform.position, destination) < speedBoostThreshold)
         {
@@ -109,6 +124,7 @@ public class PlayerController : MonoBehaviour
         {
             speed = initialSpeed;
         }
+        Logger.Instance.WriteToFile(LogId.SpeedPercentage, speed.ToString());
     
     }
 
@@ -141,11 +157,11 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("LevelPath"))
         {
-            SetTileColour(color, Vector3Int.FloorToInt(transform.position), pathTilemap);
+            SetTileColour(color, Vector3Int.FloorToInt(transform.position));
         }
     }
     
-    private void SetTileColour(Color colour, Vector3Int position, Tilemap tilemap)
+    public void SetTileColour(Color colour, Vector3Int position)
     {
         if (playerDetails.CurrentFields <= 0) 
             return;
@@ -153,14 +169,16 @@ public class PlayerController : MonoBehaviour
        
         // Flag the tile, inidicating that it can change colour.
         // By default it's set to "Lock Colour".
-        tilemap.SetTileFlags(position, TileFlags.None);
-        Color before = tilemap.GetColor(position);
+        pathTilemap.SetTileFlags(position, TileFlags.None);
+        Color before = pathTilemap.GetColor(position);
         if(before != playerDetails.Color)
             playerDetails.CurrentFields--;
         // Set the colour.
-        tilemap.SetColor(position, colour);
+        pathTilemap.SetColor(position, colour);
         
         onTileColored?.Invoke(playerDetails.PlayerID, position, before);
+        
+        Logger.Instance.WriteToFile(LogId.Heatmap, playerDetails.PlayerID + " : " + position);
     }
 
     private void Respawn()
