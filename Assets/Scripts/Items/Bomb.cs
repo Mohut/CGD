@@ -24,7 +24,8 @@ namespace Items
             Debug.Log("Explode");
             Debug.Log(transform.position);
             // explosion VFX TODO
-            Bounds bounds = new Bounds(transform.position, new Vector3(radius,radius,radius));
+            Bounds bounds = new Bounds(transform.position, new Vector3(radius*2+1,radius*2+1,1));
+            bounds = GameManager.Instance.ZoneManager.ConvertBoundsToTilemapBounds(bounds);
             GameManager.Instance.ZoneManager.ColorAllTiles(map, bounds, color, callback);
             Destroy(gameObject);
         }

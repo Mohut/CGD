@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void useItem()
+    private void UseItem()
     {
         if (items.Length > 0)
         {
@@ -93,7 +93,6 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        useItem();
         if (GameManager.Instance.GameStarted == false)
             return;
     
