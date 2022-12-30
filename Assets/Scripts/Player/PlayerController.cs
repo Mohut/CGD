@@ -94,8 +94,11 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         if (GameManager.Instance.GameStarted == false)
+        {
+            GameManager.Instance.ShowPlayer(playerDetails.PlayerID);
             return;
-    
+        }
+
         Vector2 direction = context.ReadValue<Vector2>();
         Vector3 gridpos = CanMove(direction);
         if (Vector3.Distance(gridpos, Vector3.zero) < 0.001f || Vector2.Distance(direction, Vector2.zero) < 0.001f)
@@ -124,7 +127,11 @@ public class PlayerController : MonoBehaviour
             speed = initialSpeed;
         }
         Logger.Instance.WriteToFile(LogId.SpeedPercentage, speed.ToString());
-    
+    }
+
+    public void StartGame()
+    {
+        GameManager.Instance.StartGame();
     }
 
     private Vector3 CanMove(Vector2 direction)

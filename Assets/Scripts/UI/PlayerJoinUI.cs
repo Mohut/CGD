@@ -1,18 +1,33 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerJoinUI : MonoBehaviour
 {
-    [SerializeField] private Button startButton;
+    [SerializeField] private TextMeshProUGUI startText;
     [SerializeField] private TextMeshProUGUI player1Text;
     [SerializeField] private GameObject player1Image;
+    [SerializeField] private Animator player1Animation;
     [SerializeField] private TextMeshProUGUI player2Text;
     [SerializeField] private GameObject player2Image;
+    [SerializeField] private Animator player2Animation;
     [SerializeField] private TextMeshProUGUI player3Text;
     [SerializeField] private GameObject player3Image;
+    [SerializeField] private Animator player3Animation;
     [SerializeField] private TextMeshProUGUI player4Text;
     [SerializeField] private GameObject player4Image;
+    [SerializeField] private Animator player4Animation;
+
+    private void Start()
+    {
+        GameManager.Instance.showPlayerEvent += ShowPlayer;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.showPlayerEvent -= ShowPlayer;
+    }
 
     public void OnPlayerJoined()
     {
@@ -39,7 +54,26 @@ public class PlayerJoinUI : MonoBehaviour
 
         if (GameManager.Instance.PlayerCount >= 2)
         {
-            startButton.interactable = true;
+            startText.enabled = true;
+        }
+    }
+
+    public void ShowPlayer(int playerIndex)
+    {
+        switch (playerIndex)
+        {
+            case 1:
+                player1Animation.Play("Player1");
+                break;
+            case 2:
+                player2Animation.Play("Player2");
+                break;
+            case 3:
+                player3Animation.Play("Player3");
+                break;
+            case 4:
+                player4Animation.Play("Player4");
+                break;
         }
     }
 }

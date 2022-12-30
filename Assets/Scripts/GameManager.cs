@@ -7,7 +7,12 @@ public class GameManager : MonoBehaviour
     public PlayerSpawnManager SpawnManager;
     public TilemapZoneManager ZoneManager;
     public delegate void gameOverHandler(int playerIndex);
+    public delegate void gameStartHandler();
+
+    public delegate void showPlayerHandler(int playerIndex);
     public event gameOverHandler gameOverEvent;
+    public event gameStartHandler gameStartEvent;
+    public event showPlayerHandler showPlayerEvent;
     private bool gameStarted;
     private int playerCount = 0;
 
@@ -35,6 +40,16 @@ public class GameManager : MonoBehaviour
     {
         gameOverEvent?.Invoke(playerIndex);
         LogResult(playerIndex);
+    }
+
+    public void StartGame()
+    {
+        gameStartEvent?.Invoke();
+    }
+
+    public void ShowPlayer(int playerIndex)
+    {
+        showPlayerEvent?.Invoke(playerIndex);
     }
 
     private void LogResult(int winnerId)
