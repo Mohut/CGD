@@ -73,7 +73,12 @@ public class PlayerController : MonoBehaviour
             else
             {
                 Vector3 forward = CanMove(direction);
-                if (Vector3.Distance(forward, Vector3.zero) < 0.001f) return;
+                if (Vector3.Distance(forward, Vector3.zero) < 0.001f)
+                {
+                    speed = initialSpeed;
+                    return;
+                }
+                
                 olddestination = destination;
                 destination += (Vector3)direction;
                 newdestination = destination;
@@ -113,6 +118,10 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (!context.started)
+        {
+            return;
+        }
         if (GameManager.Instance.GameStarted == false)
         {
             GameManager.Instance.ShowPlayer(playerDetails.PlayerID);
@@ -121,11 +130,16 @@ public class PlayerController : MonoBehaviour
 
         Vector2 direction = context.ReadValue<Vector2>();
         Vector3 gridpos = CanMove(direction);
+        // if gridpos is 0, the player cant move in this direction, because there is a wall
         if (Vector3.Distance(gridpos, Vector3.zero) < 0.001f || Vector2.Distance(direction, Vector2.zero) < 0.001f)
         {
+            Debug.Log("Reset");
+            Debug.Log(direction);
+            
             speed = initialSpeed;
             return;
         }
+        Debug.Log("SET");
         this.direction = direction;
         newdestination = gridpos;
 
@@ -146,6 +160,7 @@ public class PlayerController : MonoBehaviour
         {
             speed = initialSpeed;
         }
+        
         Logger.Instance.WriteToFile(LogId.SpeedPercentage, speed.ToString());
     }
 
