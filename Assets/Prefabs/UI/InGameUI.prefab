@@ -868,10 +868,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f61bc0d45cc019e43bdf3992f63ab510, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slider1: {fileID: 4811993780213685405}
-  slider2: {fileID: 4811993781213554977}
-  slider3: {fileID: 4811993781541289258}
-  slider4: {fileID: 4811993779994045850}
+  slider:
+  - {fileID: 4811993780213685405}
+  - {fileID: 4811993781213554977}
+  - {fileID: 4811993781541289258}
+  - {fileID: 4811993779994045850}
   startShadow: {fileID: 808105981425699288}
   oneText: {fileID: 649612449833256675}
   twoText: {fileID: 7977342126693959720}

@@ -10,6 +10,7 @@ using Vector3 = UnityEngine.Vector3;
 public class PlayerController : MonoBehaviour
 {
     [Header("Player")]
+    [SerializeField] private SpriteRenderer crown;
     [SerializeField] private FrontChecker frontChecker;
     [SerializeField] private PlayerDetails playerDetails;
     private Color color;
@@ -46,9 +47,15 @@ public class PlayerController : MonoBehaviour
         olddestination = destination;
         newdestination = destination;
         initialSpeed = speed;
-        
+
+        GameManager.Instance.showPlayerAhead += ShowCrown;
     }
-    
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.showPlayerAhead -= ShowCrown;
+    }
+
     private void FixedUpdate()
     {
         if (GameManager.Instance.GameStarted == false)
@@ -81,6 +88,19 @@ public class PlayerController : MonoBehaviour
                 speed * Time.deltaTime);
             
         }
+    }
+
+    private void ShowCrown(int playerIndex)
+    {
+        if (playerIndex == playerDetails.PlayerID)
+        {
+            crown.enabled = true;
+        }
+        else
+        {
+            crown.enabled = false;
+        }
+            
     }
 
     private void UseItem()

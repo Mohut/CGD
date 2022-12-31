@@ -6,10 +6,7 @@ using UnityEngine.UI;
 
 public class InGameUI : MonoBehaviour
 {
-    [SerializeField] private Slider slider1;
-    [SerializeField] private Slider slider2;
-    [SerializeField] private Slider slider3;
-    [SerializeField] private Slider slider4;
+    [SerializeField] private List<Slider> slider;
     [SerializeField] private GameObject startShadow;
     [SerializeField] private TextMeshProUGUI oneText;
     [SerializeField] private TextMeshProUGUI twoText;
@@ -23,12 +20,12 @@ public class InGameUI : MonoBehaviour
         if (GameManager.Instance.PlayerCount == 2)
             return;
 
-        slider3.gameObject.SetActive(true);
+        slider[2].gameObject.SetActive(true);
 
         if (GameManager.Instance.PlayerCount == 3)
             return;
 
-        slider4.gameObject.SetActive(true);
+        slider[3].gameObject.SetActive(true);
     }
     private void OnDestroy()
     {
@@ -42,34 +39,56 @@ public class InGameUI : MonoBehaviour
         switch (player)
         {
             case 1:
-                slider1.value = progress;
+                slider[0].value = progress;
                 break;
             case 2:
-                slider2.value = progress;
+                slider[1].value = progress;
                 break;
             case 3:
-                slider3.value = progress;
+                slider[2].value = progress;
                 break;
             case 4:
-                slider4.value = progress;
+                slider[3].value = progress;
                 break;
         }
+        
+        CheckIfPlayerAhead();
+    }
+
+    public void CheckIfPlayerAhead()
+    {
+        int playerAhead = -1;
+        float highestValue = slider[0].value;
+
+        if (slider[0].value > 0)
+            playerAhead = 1;
+
+        for (int i = 0; i < slider.Count - 1; i++)
+        {
+            if (highestValue < slider[i].value)
+            {
+                highestValue = slider[i].value;
+                playerAhead = i+1;
+            }
+        }
+        
+        GameManager.Instance.ChangePlayerAhead(playerAhead);
     }
 
     private void LogPlayerProgression(int noInt)
     {
-        Logger.Instance.WriteToFile(LogId.PlayerAheadTime, "Player1 progress: " + slider1.value);
-        Logger.Instance.WriteToFile(LogId.PlayerAheadTime, "Player2 progress: " + slider2.value);
+        Logger.Instance.WriteToFile(LogId.PlayerAheadTime, "Player1 progress: " + slider[0].value);
+        Logger.Instance.WriteToFile(LogId.PlayerAheadTime, "Player2 progress: " + slider[1].value);
 
         if (GameManager.Instance.PlayerCount == 2)
             return;
         
-        Logger.Instance.WriteToFile(LogId.PlayerAheadTime, "Player3 progress: " + slider3.value);
+        Logger.Instance.WriteToFile(LogId.PlayerAheadTime, "Player3 progress: " + slider[2].value);
 
         if (GameManager.Instance.PlayerCount == 3)
             return;
         
-        Logger.Instance.WriteToFile(LogId.PlayerAheadTime, "Player4 progress: " + slider4.value);
+        Logger.Instance.WriteToFile(LogId.PlayerAheadTime, "Player4 progress: " + slider[3].value);
     }
 
     private void CountDown()
