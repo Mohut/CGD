@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Numerics;
 using Items;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Player")]
     [SerializeField] private SpriteRenderer crown;
+    [SerializeField] private SpriteRenderer speedBoostImage;
     [SerializeField] private FrontChecker frontChecker;
     [SerializeField] private PlayerDetails playerDetails;
     private Color color;
@@ -105,7 +107,13 @@ public class PlayerController : MonoBehaviour
         {
             crown.enabled = false;
         }
-            
+    }
+
+    IEnumerator Co_ShowSpeedBoost()
+    {
+        speedBoostImage.enabled = true;
+        yield return new WaitForSeconds(0.3f);
+        speedBoostImage.enabled = false;
     }
 
     private void UseItem()
@@ -133,13 +141,10 @@ public class PlayerController : MonoBehaviour
         // if gridpos is 0, the player cant move in this direction, because there is a wall
         if (Vector3.Distance(gridpos, Vector3.zero) < 0.001f || Vector2.Distance(direction, Vector2.zero) < 0.001f)
         {
-            Debug.Log("Reset");
-            Debug.Log(direction);
-            
             speed = initialSpeed;
             return;
         }
-        Debug.Log("SET");
+        
         this.direction = direction;
         newdestination = gridpos;
 
@@ -155,6 +160,7 @@ public class PlayerController : MonoBehaviour
             Vector3.Distance(transform.position, destination) < speedBoostThreshold)
         {
             speed += speedBoost;
+            StartCoroutine(Co_ShowSpeedBoost());
         }
         else
         {

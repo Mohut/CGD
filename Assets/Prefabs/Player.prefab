@@ -508,6 +508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crown: {fileID: 5002536709512305622}
+  speedBoostImage: {fileID: 7873074490182189612}
   frontChecker: {fileID: 7036237488806000881}
   playerDetails: {fileID: 7665674250008251990}
   controller: {fileID: 1244215213366936261}
