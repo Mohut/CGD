@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using Items;
 using UnityEngine;
@@ -25,7 +27,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speedBoost;
     public float speed;
     private float initialSpeed;
-    public Item[] items;
+    public List<Item> items;
 
     [Header("Map")]
     public Tilemap pathTilemap;
@@ -97,6 +99,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void AddItem(Item item)
+    {
+        items.Add(item);
+    }
+
     private void ShowCrown(int playerIndex)
     {
         if (playerIndex == playerDetails.PlayerID)
@@ -116,11 +123,14 @@ public class PlayerController : MonoBehaviour
         speedBoostImage.enabled = false;
     }
 
-    private void UseItem()
+    public void UseItem(InputAction.CallbackContext context)
     {
-        if (items.Length > 0)
+        if (!context.started) return;
+        
+        if (items.Count > 0)
         {
             items[0].TriggerEffect(gameObject);
+            items.RemoveAt(0);
         }
     }
 
@@ -236,33 +246,5 @@ public class PlayerController : MonoBehaviour
         newdestination = destination;
         direction = Vector2.zero;
     }
-
-    public void TriggerGun(InputAction.CallbackContext context)
-    {
-        //Debug.Log(playerDetails.HasGun);
-        if (playerDetails.HasGun == false) 
-            return;
-        
-        Vector3 currentPos = transform.position;
-        Vector3Int gridPosition = pathTilemap.WorldToCell(currentPos);
-        
-        while (!borderTilemap.HasTile(gridPosition))
-        {
-            if(borderTilemap.HasTile(gridPosition))
-                break;
-            pathTilemap.SetTileFlags(gridPosition, TileFlags.None);
-            Color before = pathTilemap.GetColor(gridPosition);
-            
-            // Set the colour.
-            pathTilemap.SetColor(gridPosition, color);
-        
-            onTileColored?.Invoke(playerDetails.PlayerID, gridPosition, before);
-          
-            Vector3Int dir = new Vector3Int((int) transform.right.x, (int) transform.right.y, (int)transform.right.z);
-            gridPosition += dir;
-            Debug.Log(gridPosition);
-        }
-
-        playerDetails.HasGun = false;
-    }
+    
 }
