@@ -12,6 +12,7 @@ public class PlayerDetails : MonoBehaviour
     
     public int MaxFields;
     public int CurrentFields;
+    public bool HasGun = false;
 
     [SerializeField] private SpriteRenderer spriteRenderer;
     // Start is called before the first frame update

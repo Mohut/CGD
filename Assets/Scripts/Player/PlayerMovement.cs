@@ -44,6 +44,15 @@ public partial class @PlayerMovement : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Items"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""c802dbb6-0dd0-4ba8-a911-e45a537b5f99"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -233,6 +242,28 @@ public partial class @PlayerMovement : IInputActionCollection2, IDisposable
                     ""action"": ""StartGame"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bd652ccc-1c27-4f63-8ccf-f7a105c305c4"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Items"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""81d687fe-3e99-4c0c-a4e3-b95ef3a6a740"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Items"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -243,6 +274,7 @@ public partial class @PlayerMovement : IInputActionCollection2, IDisposable
         m_Main = asset.FindActionMap("Main", throwIfNotFound: true);
         m_Main_Movement = m_Main.FindAction("Movement", throwIfNotFound: true);
         m_Main_StartGame = m_Main.FindAction("StartGame", throwIfNotFound: true);
+        m_Main_Items = m_Main.FindAction("Items", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -304,12 +336,14 @@ public partial class @PlayerMovement : IInputActionCollection2, IDisposable
     private IMainActions m_MainActionsCallbackInterface;
     private readonly InputAction m_Main_Movement;
     private readonly InputAction m_Main_StartGame;
+    private readonly InputAction m_Main_Items;
     public struct MainActions
     {
         private @PlayerMovement m_Wrapper;
         public MainActions(@PlayerMovement wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Main_Movement;
         public InputAction @StartGame => m_Wrapper.m_Main_StartGame;
+        public InputAction @Items => m_Wrapper.m_Main_Items;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -325,6 +359,9 @@ public partial class @PlayerMovement : IInputActionCollection2, IDisposable
                 @StartGame.started -= m_Wrapper.m_MainActionsCallbackInterface.OnStartGame;
                 @StartGame.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnStartGame;
                 @StartGame.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnStartGame;
+                @Items.started -= m_Wrapper.m_MainActionsCallbackInterface.OnItems;
+                @Items.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnItems;
+                @Items.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnItems;
             }
             m_Wrapper.m_MainActionsCallbackInterface = instance;
             if (instance != null)
@@ -335,6 +372,9 @@ public partial class @PlayerMovement : IInputActionCollection2, IDisposable
                 @StartGame.started += instance.OnStartGame;
                 @StartGame.performed += instance.OnStartGame;
                 @StartGame.canceled += instance.OnStartGame;
+                @Items.started += instance.OnItems;
+                @Items.performed += instance.OnItems;
+                @Items.canceled += instance.OnItems;
             }
         }
     }
@@ -343,5 +383,6 @@ public partial class @PlayerMovement : IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnStartGame(InputAction.CallbackContext context);
+        void OnItems(InputAction.CallbackContext context);
     }
 }

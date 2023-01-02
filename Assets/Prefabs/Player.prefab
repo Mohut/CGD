@@ -490,6 +490,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: f9ea3c82-198a-4be7-b9df-1b6bcb2ae3b9
     m_ActionName: Main/StartGame[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1244215213366936259}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: TriggerGun
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c802dbb6-0dd0-4ba8-a911-e45a537b5f99
+    m_ActionName: Main/Items[/Keyboard/g,/Keyboard/b]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Main
@@ -573,6 +589,7 @@ MonoBehaviour:
   Color: {r: 0, g: 0, b: 0, a: 0}
   MaxFields: 30
   CurrentFields: 0
+  HasGun: 0
   spriteRenderer: {fileID: 1244215213366936257}
 --- !u!1 &1580664273593643508
 GameObject:

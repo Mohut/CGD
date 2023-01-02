@@ -236,4 +236,33 @@ public class PlayerController : MonoBehaviour
         newdestination = destination;
         direction = Vector2.zero;
     }
+
+    public void TriggerGun(InputAction.CallbackContext context)
+    {
+        //Debug.Log(playerDetails.HasGun);
+        if (playerDetails.HasGun == false) 
+            return;
+        
+        Vector3 currentPos = transform.position;
+        Vector3Int gridPosition = pathTilemap.WorldToCell(currentPos);
+        
+        while (!borderTilemap.HasTile(gridPosition))
+        {
+            if(borderTilemap.HasTile(gridPosition))
+                break;
+            pathTilemap.SetTileFlags(gridPosition, TileFlags.None);
+            Color before = pathTilemap.GetColor(gridPosition);
+            
+            // Set the colour.
+            pathTilemap.SetColor(gridPosition, color);
+        
+            onTileColored?.Invoke(playerDetails.PlayerID, gridPosition, before);
+          
+            Vector3Int dir = new Vector3Int((int) transform.right.x, (int) transform.right.y, (int)transform.right.z);
+            gridPosition += dir;
+            Debug.Log(gridPosition);
+        }
+
+        playerDetails.HasGun = false;
+    }
 }
