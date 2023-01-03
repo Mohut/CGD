@@ -122,6 +122,7 @@ public class TilemapZoneManager : MonoBehaviour
         ColorWalls(zone, playerid);
         SoundManager.Instance.PlayZoneTakenSound();
         CheckZoneProgress();
+        Logger.Instance.WriteToFile(LogId.ZoneTakenTime, Time.time.ToString());
     }
 
     private void ResetZoneOwner(int zone)

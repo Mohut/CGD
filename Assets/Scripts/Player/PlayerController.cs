@@ -121,6 +121,7 @@ public class PlayerController : MonoBehaviour
         if (items.Length > 0)
         {
             items[0].TriggerEffect(gameObject);
+            Logger.Instance.WriteToFile(LogId.ItemUsage, Time.time + " " + items[0].name);
         }
     }
 
