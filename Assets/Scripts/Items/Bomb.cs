@@ -21,8 +21,6 @@ namespace Items
 
         private void Explode(Color color, float radius, Tilemap map, Action<Color, Vector3Int> callback)
         {
-            Debug.Log("Explode");
-            Debug.Log(transform.position);
             // explosion VFX TODO
             Bounds bounds = new Bounds(transform.position, new Vector3(radius*2+1,radius*2+1,1));
             bounds = GameManager.Instance.ZoneManager.ConvertBoundsToTilemapBounds(bounds);

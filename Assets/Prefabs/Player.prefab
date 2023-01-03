@@ -494,7 +494,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1244215213366936259}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: TriggerGun
+        m_MethodName: UseItem
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -531,8 +531,7 @@ MonoBehaviour:
   speedBoostThreshold: 0.5
   speedBoost: 0.2
   speed: 2
-  items:
-  - {fileID: 11400000, guid: 760caefa922e3ca4ea8bec867620ddad, type: 2}
+  items: []
   pathTilemap: {fileID: 0}
   borderTilemap: {fileID: 0}
 --- !u!50 &1244215213366936261
