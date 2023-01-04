@@ -12,7 +12,8 @@ using Vector3 = UnityEngine.Vector3;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Player")]
+    [Header("Player")] 
+    [SerializeField] private SpriteRenderer itemSpriteRenderer;
     [SerializeField] private SpriteRenderer crown;
     [SerializeField] private SpriteRenderer speedBoostImage;
     [SerializeField] private FrontChecker frontChecker;
@@ -102,6 +103,8 @@ public class PlayerController : MonoBehaviour
     public void AddItem(Item item)
     {
         items.Add(item);
+        itemSpriteRenderer.sprite = item.sprite;
+        itemSpriteRenderer.enabled = true;
     }
 
     private void ShowCrown(int playerIndex)
@@ -132,6 +135,7 @@ public class PlayerController : MonoBehaviour
             items[0].TriggerEffect(gameObject);
             Logger.Instance.WriteToFile(LogId.ItemUsage, Time.time + " " + items[0].name);
             items.RemoveAt(0);
+            itemSpriteRenderer.enabled = false;
         }
     }
 

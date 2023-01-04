@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Bomb
   m_EditorClassIdentifier: 
   name: Bomb
+  sprite: {fileID: 21300000, guid: 30cedb2274f95a540a85a904c77aeaad, type: 3}
   _bombPrefab: {fileID: 2876484813371920457, guid: 40dd7307bd059334f9c9bc7c72bf1b4d, type: 3}
   _bombRadius: 2
   timeToDetonate: 1
