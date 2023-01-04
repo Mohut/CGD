@@ -108,7 +108,6 @@ public class PlayerController : MonoBehaviour
         {
             items.Add(item);
         }
-        items.Add(item);
         itemSpriteRenderer.sprite = item.sprite;
         itemSpriteRenderer.enabled = true;
     }
