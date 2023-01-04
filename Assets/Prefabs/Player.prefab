@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8737510230745318560}
   - component: {fileID: 6451387379298101514}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Circle (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5347841536900444670}
   - component: {fileID: 6823049041042416887}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Nose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2109690631549009616}
   - component: {fileID: 2075977308555381968}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -263,7 +263,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2684049107307731836}
   - component: {fileID: 5002536709512305622}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Crown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,7 +352,7 @@ GameObject:
   - component: {fileID: 1244215213366936261}
   - component: {fileID: 1244215213366936260}
   - component: {fileID: 7665674250008251990}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -603,7 +603,7 @@ GameObject:
   - component: {fileID: 6685805527187079701}
   - component: {fileID: 4681172447792117715}
   - component: {fileID: 7036237488806000881}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FrontTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -675,7 +675,7 @@ GameObject:
   - component: {fileID: 2507172237663431140}
   - component: {fileID: 5516936217958002445}
   - component: {fileID: 7454234188471893699}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -773,7 +773,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1324221088324029779}
   - component: {fileID: 8789035678256313016}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Circle (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -858,7 +858,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5997930312971392789}
   - component: {fileID: 7873074490182189612}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SpeedBoostSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -942,7 +942,7 @@ GameObject:
   m_Component:
   - component: {fileID: 439933857819863068}
   - component: {fileID: 2686686107947570833}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Circle (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

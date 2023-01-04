@@ -102,6 +102,12 @@ public class PlayerController : MonoBehaviour
 
     public void AddItem(Item item)
     {
+        if (items.Count > 0 )
+        items[0] = item;
+        else
+        {
+            items.Add(item);
+        }
         items.Add(item);
         itemSpriteRenderer.sprite = item.sprite;
         itemSpriteRenderer.enabled = true;
@@ -133,7 +139,7 @@ public class PlayerController : MonoBehaviour
         if (items.Count > 0)
         {
             items[0].TriggerEffect(gameObject);
-            Logger.Instance.WriteToFile(LogId.ItemUsage, Time.time + " " + items[0].name);
+            Logger.Instance.WriteToFile(LogId.ItemUsage,  items[0].name);
             items.RemoveAt(0);
             itemSpriteRenderer.enabled = false;
         }
@@ -243,7 +249,7 @@ public class PlayerController : MonoBehaviour
         Logger.Instance.WriteToFile(LogId.Heatmap, playerDetails.PlayerID + " : " + position);
     }
 
-    private void Respawn()
+    public void Respawn()
     {
         transform.position = playerDetails.StartPos;
         destination = playerDetails.StartPos;
