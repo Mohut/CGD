@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     private bool gameStarted;
     private int playerCount = 0;
 
-    private float[,] heatmap;
+    private float[,] heatmap = new float[24, 18];
 
     public bool GameStarted { get => gameStarted; set => gameStarted = value; }
     public int PlayerCount { get => playerCount; set => playerCount = value; }

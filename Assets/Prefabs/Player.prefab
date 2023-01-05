@@ -532,7 +532,7 @@ MonoBehaviour:
   controller: {fileID: 1244215213366936261}
   speedBoostThreshold: 0.5
   speedBoost: 0.2
-  speed: 2
+  speed: 3
   items: []
   pathTilemap: {fileID: 0}
   borderTilemap: {fileID: 0}
@@ -588,7 +588,7 @@ MonoBehaviour:
   PlayerID: 0
   StartPos: {x: 0, y: 0, z: 0}
   Color: {r: 0, g: 0, b: 0, a: 0}
-  MaxFields: 30
+  MaxFields: 55
   CurrentFields: 0
   HasGun: 0
   spriteRenderer: {fileID: 1244215213366936257}

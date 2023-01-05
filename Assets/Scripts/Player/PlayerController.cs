@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour
     private bool used = false;
     private float passed = 0;
 
+    private bool onWall = false;
+
     public Action<int, Vector3, Color> onTileColored;
     
     private void Awake()
@@ -161,6 +163,7 @@ public class PlayerController : MonoBehaviour
         // if gridpos is 0, the player cant move in this direction, because there is a wall
         if (Vector3.Distance(gridpos, Vector3.zero) < 0.001f || Vector2.Distance(direction, Vector2.zero) < 0.001f)
         {
+            onWall = true;
             speed = initialSpeed;
             return;
         }
@@ -179,8 +182,18 @@ public class PlayerController : MonoBehaviour
         if (Vector3.Distance(transform.position, olddestination) < speedBoostThreshold ||
             Vector3.Distance(transform.position, destination) < speedBoostThreshold)
         {
-            speed += speedBoost;
-            StartCoroutine(Co_ShowSpeedBoost());
+            if (onWall)
+            {
+                onWall = false;
+                
+            }
+            else
+            {
+                
+                speed += speedBoost;
+                StartCoroutine(Co_ShowSpeedBoost());
+            }
+                
         }
         else
         {
