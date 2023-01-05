@@ -21,7 +21,7 @@ namespace Items
             // bomb should have the same color as the player who spawned it
             GameObject bombObject = GameObject.Instantiate(_bombPrefab, player.transform.position, Quaternion.identity);
             PlayerController controller = player.GetComponent<PlayerController>();
-            bombObject.GetComponent<Bomb>().Trigger(playerColor, _bombRadius, timeToDetonate, controller.pathTilemap, controller.SetTileColour);
+            bombObject.GetComponent<Bomb>().Trigger(playerColor, _bombRadius, timeToDetonate, controller.pathTilemap, controller.SetTileColour, player);
         }
     }
 }

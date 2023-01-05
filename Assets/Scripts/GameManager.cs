@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     private bool gameStarted;
     private int playerCount = 0;
 
+    private float[,] heatmap = new float[24, 18];
+
     public bool GameStarted { get => gameStarted; set => gameStarted = value; }
     public int PlayerCount { get => playerCount; set => playerCount = value; }
     public int PlayerAhead { get => playerAhead; set => playerAhead = value; }
@@ -37,10 +39,19 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 1;
+
+        for (int x = 0; x < 24; x++)
+        {
+            for (int y = 0; y < 18; y++)
+            {
+                heatmap[x, y] = 0;
+            }
+        }
     }
 
     public void GameOver(int playerIndex)
     {
+        // log heatmap
         gameOverEvent?.Invoke(playerIndex);
         LogResult(playerIndex);
     }
@@ -59,6 +70,11 @@ public class GameManager : MonoBehaviour
     {
         playerAhead = playerIndex;
         showPlayerAhead?.Invoke(playerAhead);
+    }
+
+    public void RegisterField(Vector3 pos)
+    {
+        heatmap[(int) (pos.x + 12), (int) (pos.y + 9)] += 1;
     }
 
     private void LogResult(int winnerId)
