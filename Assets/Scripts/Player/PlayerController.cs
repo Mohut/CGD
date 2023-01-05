@@ -186,8 +186,9 @@ public class PlayerController : MonoBehaviour
         {
             speed = initialSpeed;
         }
-        
-        Logger.Instance.WriteToFile(LogId.SpeedPercentage, speed.ToString());
+
+        int playernumber = GameManager.Instance.SpawnManager.PlayerColorDictionary[color];
+        Logger.Instance.WriteToFile(LogId.SpeedPercentage, "Player " + playernumber + " Speed To: " + speed);
     }
 
     public void StartGame()
