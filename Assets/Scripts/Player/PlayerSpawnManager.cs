@@ -16,7 +16,7 @@ public class PlayerSpawnManager : MonoBehaviour
     private Transform[] spawnLocations;
     
     [SerializeField]
-    private Color[] colors;
+    public Color[] colors;
 
     public Dictionary<Color, int> PlayerColorDictionary = new Dictionary<Color, int>();
 
