@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SpriteRenderer speedBoostImage;
     [SerializeField] private FrontChecker frontChecker;
     [SerializeField] private PlayerDetails playerDetails;
+    [SerializeField] private AudioSource audioSource;
     private Color color;
     public Rigidbody2D controller;
     private Vector3 destination;
@@ -105,7 +106,7 @@ public class PlayerController : MonoBehaviour
     public void AddItem(Item item)
     {
         if (items.Count > 0 )
-        items[0] = item;
+            items[0] = item;
         else
         {
             items.Add(item);
@@ -139,6 +140,8 @@ public class PlayerController : MonoBehaviour
         
         if (items.Count > 0)
         {
+            audioSource.clip = items[0].sound;
+            audioSource.Play();
             items[0].TriggerEffect(gameObject);
             Logger.Instance.WriteToFile(LogId.ItemUsage,  items[0].name);
             items.RemoveAt(0);

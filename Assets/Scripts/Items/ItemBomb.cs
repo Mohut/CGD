@@ -11,8 +11,8 @@ namespace Items
         [SerializeField] private GameObject _bombPrefab;
         [SerializeField] private float _bombRadius;
         [SerializeField] private float timeToDetonate;
-        
-        
+
+
         public override void TriggerEffect(GameObject player)
         {
             Debug.Log("TriggerEffect");

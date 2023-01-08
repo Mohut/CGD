@@ -7,6 +7,7 @@ namespace Items
     {
         public string name;
         public Sprite sprite;
+        public AudioClip sound;
         public abstract void TriggerEffect(GameObject player);
 
     }

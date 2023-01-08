@@ -45,8 +45,8 @@ public class ScoreManager : MonoBehaviour
 
     public void AddScore(int playerid, float score)
     {
-        Color bgColor = new Color(SpawnManager.colors[playerid-1].r - 0.5f, SpawnManager.colors[playerid-1].g - 0.5f, SpawnManager.colors[playerid-1].b - 0.5f, 0.5f);
-        Camera.main.backgroundColor = SpawnManager.colors[playerid-1];
+        Color bgColor = new Color(SpawnManager.colors[playerid-1].r - 0.5f, SpawnManager.colors[playerid-1].g - 0.5f, SpawnManager.colors[playerid-1].b - 0.5f);
+        Camera.main.backgroundColor = bgColor;
         PlayerScores[playerid] += score;
         onPlayerScoreChange?.Invoke(playerid, PlayerScores[playerid]);
         if(PlayerScores[playerid] >= pointsToWin)

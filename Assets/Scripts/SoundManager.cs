@@ -11,7 +11,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip playerHitSound;
     [SerializeField] private AudioClip zoneTakenSound;
     [SerializeField] private AudioClip colorRefilledSound;
-    
+
 
     private void Awake()
     {
