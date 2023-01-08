@@ -531,6 +531,7 @@ MonoBehaviour:
   frontChecker: {fileID: 7036237488806000881}
   playerDetails: {fileID: 7665674250008251990}
   audioSource: {fileID: 2093510402794584185}
+  invincibilityTime: 2
   controller: {fileID: 1244215213366936261}
   speedBoostThreshold: 0.5
   speedBoost: 0.2
@@ -761,6 +762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0f56e43d6b42144090f28b9a2f7ae01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collider: {fileID: 4681172447792117715}
 --- !u!1 &1807851293052072409
 GameObject:
   m_ObjectHideFlags: 0

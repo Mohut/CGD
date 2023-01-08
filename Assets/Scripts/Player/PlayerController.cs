@@ -19,12 +19,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private FrontChecker frontChecker;
     [SerializeField] private PlayerDetails playerDetails;
     [SerializeField] private AudioSource audioSource;
+    [SerializeField] private float invincibilityTime;
     private Color color;
     public Rigidbody2D controller;
     private Vector3 destination;
     private Vector3 newdestination;
     private Vector3 olddestination;
     private Vector2 direction;
+    private bool isInvincible = false;
+
     [SerializeField] private float speedBoostThreshold;
     [SerializeField] private float speedBoost;
     public float speed;
@@ -83,6 +86,7 @@ public class PlayerController : MonoBehaviour
                 Vector3 forward = CanMove(direction);
                 if (Vector3.Distance(forward, Vector3.zero) < 0.001f)
                 {
+                    onWall = true;
                     speed = initialSpeed;
                     return;
                 }
@@ -225,9 +229,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("Player") == false)
+        if (!col.gameObject.CompareTag("Player"))
             return;
-
+        if (isInvincible)
+            return;
         if (frontChecker.BehindPlayer == false || (col.gameObject.GetComponentInChildren<FrontChecker>().BehindPlayer && frontChecker.BehindPlayer))
         {
             Respawn();
@@ -265,6 +270,17 @@ public class PlayerController : MonoBehaviour
         Logger.Instance.WriteToFile(LogId.Heatmap, playerDetails.PlayerID + " : " + position);
     }
 
+    private IEnumerator Invincibility(float time)
+    {
+        yield return new WaitForSeconds(0.1f);
+        CapsuleCollider2D collider = GetComponent<CapsuleCollider2D>();
+        isInvincible = true;
+        collider.isTrigger = true;
+        yield return new WaitForSeconds(time);
+        isInvincible = false;
+        collider.isTrigger = false;
+    }
+
     public void Respawn()
     {
         transform.position = playerDetails.StartPos;
@@ -272,6 +288,7 @@ public class PlayerController : MonoBehaviour
         olddestination = destination;
         newdestination = destination;
         direction = Vector2.zero;
+        StartCoroutine(Invincibility(invincibilityTime));
     }
     
 }
