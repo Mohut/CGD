@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     private bool gameStarted;
     private int playerCount = 0;
 
-    private float[,] heatmap = new float[24, 18];
+    private float[,] heatmap = new float[18, 26];
 
     public bool GameStarted { get => gameStarted; set => gameStarted = value; }
     public int PlayerCount { get => playerCount; set => playerCount = value; }
@@ -44,16 +44,28 @@ public class GameManager : MonoBehaviour
         {
             for (int y = 0; y < 18; y++)
             {
-                heatmap[x, y] = 0;
+                heatmap[y,x] = 0;
             }
         }
     }
 
     public void GameOver(int playerIndex)
     {
-        // log heatmap
+        Debug.Log("Game Over");
+
         gameOverEvent?.Invoke(playerIndex);
         LogResult(playerIndex);
+        // log heatmap
+        Logger.Instance.WriteToFile(LogId.Heatmap, "Heatmap");
+        for (int i = 0; i < heatmap.GetLength(0); i++)
+        {
+            string row = "";
+            for (int j = 0; j < heatmap.GetLength(1); j++)
+            {
+                row += heatmap[i,j] + " ";
+            }
+            Logger.Instance.WriteToFile(LogId.Heatmap, row);
+        }
     }
 
     public void StartGame()
@@ -74,7 +86,7 @@ public class GameManager : MonoBehaviour
 
     public void RegisterField(Vector3 pos)
     {
-        heatmap[(int) (pos.x + 12), (int) (pos.y + 9)] += 1;
+        heatmap[ (int)(pos.y)*-1 + 5, (int) (pos.x + 9)] += 1;
     }
 
     private void LogResult(int winnerId)

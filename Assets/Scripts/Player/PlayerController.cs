@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float speedBoostThreshold;
     [SerializeField] private float speedBoost;
+    private LineRenderer lineRenderer;
     public float speed;
     private float initialSpeed;
     public List<Item> items;
@@ -43,6 +44,10 @@ public class PlayerController : MonoBehaviour
     private float passed = 0;
 
     private bool onWall = false;
+    private bool hasGun = false;
+
+    private Vector3 wallPos;
+    [SerializeField] private LayerMask wallMask;
 
     public Action<int, Vector3, Color> onTileColored;
     
@@ -58,6 +63,9 @@ public class PlayerController : MonoBehaviour
         olddestination = destination;
         newdestination = destination;
         initialSpeed = speed;
+        lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.startWidth = 0.1f;
+        lineRenderer.endWidth = 0.1f;
 
         GameManager.Instance.showPlayerAhead += ShowCrown;
     }
@@ -105,6 +113,13 @@ public class PlayerController : MonoBehaviour
                 speed * Time.deltaTime);
             
         }
+
+        if (hasGun)
+        {
+            
+            lineRenderer.SetPosition(0, transform.position);
+            lineRenderer.SetPosition(1, wallPos);
+        }
     }
 
     public void AddItem(Item item)
@@ -117,6 +132,11 @@ public class PlayerController : MonoBehaviour
         }
         itemSpriteRenderer.sprite = item.sprite;
         itemSpriteRenderer.enabled = true;
+        if (item.name == "Gun")
+        {
+            hasGun = true;
+            lineRenderer.enabled = true;
+        }
     }
 
     private void ShowCrown(int playerIndex)
@@ -150,11 +170,14 @@ public class PlayerController : MonoBehaviour
             Logger.Instance.WriteToFile(LogId.ItemUsage,  items[0].name);
             items.RemoveAt(0);
             itemSpriteRenderer.enabled = false;
+            hasGun = false;
+            lineRenderer.enabled = false;
         }
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        Vector2 oldDirection = this.direction;
         if (!context.started)
         {
             return;
@@ -196,9 +219,11 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                
-                speed += speedBoost;
-                StartCoroutine(Co_ShowSpeedBoost());
+                if (Vector2.Distance(this.direction, oldDirection) > 0.01f)
+                {
+                    speed += speedBoost;
+                    StartCoroutine(Co_ShowSpeedBoost());
+                }
             }
                 
         }
@@ -207,9 +232,18 @@ public class PlayerController : MonoBehaviour
             speed = initialSpeed;
         }
 
+        if (hasGun)
+        {
+            
+            RaycastHit2D wallHit = Physics2D.Raycast((Vector2) transform.position, direction, 40f, wallMask);
+            wallPos = wallHit.point;
+        }
+        
+        
         int playernumber = GameManager.Instance.SpawnManager.PlayerColorDictionary[color];
         Logger.Instance.WriteToFile(LogId.SpeedPercentage, "Player " + playernumber + " Speed To: " + speed);
     }
+
 
     public void StartGame()
     {
@@ -264,10 +298,11 @@ public class PlayerController : MonoBehaviour
             playerDetails.CurrentFields--;
         // Set the colour.
         pathTilemap.SetColor(position, colour);
+
+        Debug.Log(pathTilemap.WorldToCell(position));
         
         onTileColored?.Invoke(playerDetails.PlayerID, position, before);
-        
-        Logger.Instance.WriteToFile(LogId.Heatmap, playerDetails.PlayerID + " : " + position);
+        GameManager.Instance.RegisterField(position);
     }
 
     private IEnumerator Invincibility(float time)
