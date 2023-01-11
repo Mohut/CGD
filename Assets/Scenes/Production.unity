@@ -360,6 +360,7 @@ GameObject:
   - component: {fileID: 256528954}
   - component: {fileID: 256528953}
   - component: {fileID: 256528956}
+  - component: {fileID: 256528957}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
