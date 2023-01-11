@@ -50,7 +50,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask wallMask;
 
     public Action<int, Vector3, Color> onTileColored;
-    
+    private int overOwnFields = 0;
+    private int overEnemyFields = 0;
+    private int overNeutralFields = 0;
+
+
     private void Awake()
     {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -68,6 +72,10 @@ public class PlayerController : MonoBehaviour
         lineRenderer.endWidth = 0.1f;
 
         GameManager.Instance.showPlayerAhead += ShowCrown;
+        GameManager.Instance.gameOverEvent += (int index) =>
+        {
+            PlayerGameOver();
+        };
     }
 
     private void OnDestroy()
@@ -294,13 +302,25 @@ public class PlayerController : MonoBehaviour
         // By default it's set to "Lock Colour".
         pathTilemap.SetTileFlags(position, TileFlags.None);
         Color before = pathTilemap.GetColor(position);
-        if(before != playerDetails.Color)
+        if (before != playerDetails.Color)
+        {
             playerDetails.CurrentFields--;
+            if (before == Color.white)
+            {
+                overNeutralFields++;
+            }
+            else
+            {
+                overEnemyFields++;
+            }
+        }
+        else
+        {
+            overOwnFields++;
+        }
         // Set the colour.
         pathTilemap.SetColor(position, colour);
 
-        Debug.Log(pathTilemap.WorldToCell(position));
-        
         onTileColored?.Invoke(playerDetails.PlayerID, position, before);
         GameManager.Instance.RegisterField(position);
     }
@@ -314,6 +334,13 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(time);
         isInvincible = false;
         collider.isTrigger = false;
+    }
+
+    private void PlayerGameOver()
+    {
+        Logger.Instance.WriteToFile(LogId.FieldTypes, "Player " + playerDetails.PlayerID + " OverNeutralFields: " + overNeutralFields);
+        Logger.Instance.WriteToFile(LogId.FieldTypes, "Player " + playerDetails.PlayerID + " OverEnemyFields: " + overEnemyFields);
+        Logger.Instance.WriteToFile(LogId.FieldTypes, "Player " + playerDetails.PlayerID + " OverOwnFields: " + overOwnFields);
     }
 
     public void Respawn()

@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using UnityEngine;
 
-public enum LogId {Heatmap, SpeedPercentage, ZoneTakenTime, ItemUsage, PlayerAheadTime, PlayerHit, Other}
+public enum LogId {Heatmap, SpeedPercentage, ZoneTakenTime, ItemUsage, PlayerAheadTime, PlayerHit, FieldTypes, Other}
 public class Logger : MonoBehaviour
 {
     public static Logger Instance;
