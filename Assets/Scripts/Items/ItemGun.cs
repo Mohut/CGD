@@ -68,7 +68,7 @@ public class ItemGun : Item
                     
                 Debug.Log("YESSSS");
                 SoundManager.Instance.PlayPlayerHitSound();
-                Logger.Instance.WriteToFile(LogId.PlayerHit, "Player" + player.gameObject.GetComponent<PlayerDetails>().PlayerID + " hit Player" + objects[0].transform.gameObject.GetComponent<PlayerDetails>().PlayerID);
+                Logger.Instance.WriteToFile(LogId.PlayerHit, "Player" + player.gameObject.GetComponent<PlayerDetails>().PlayerID + " hit Player" + t.transform.gameObject.GetComponent<PlayerDetails>().PlayerID);
             }
         }
         playerDetails.HasGun = false;

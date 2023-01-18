@@ -15,7 +15,6 @@ namespace Items
 
         public override void TriggerEffect(GameObject player)
         {
-            Debug.Log("TriggerEffect");
             // expensive invocation should be ok since items are not used often
             Color playerColor = player.GetComponent<PlayerDetails>().Color;
             // bomb should have the same color as the player who spawned it
