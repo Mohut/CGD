@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
@@ -80,6 +81,7 @@ public class ScoreManager : MonoBehaviour
             temp[pair.Key] = false;
         }
 
+        Camera.main.backgroundColor = new Color(0.188f, 0.188f, 0.188f, 1);
         LeadPlayer = temp;
     }
 
