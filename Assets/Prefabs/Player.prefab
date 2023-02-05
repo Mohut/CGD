@@ -596,7 +596,7 @@ MonoBehaviour:
   StartPos: {x: 0, y: 0, z: 0}
   Color: {r: 0, g: 0, b: 0, a: 0}
   MaxFields: 55
-  CurrentFields: 0
+  CurrentFields: 55
   HasGun: 0
   spriteRenderer: {fileID: 1244215213366936257}
 --- !u!82 &2093510402794584185
