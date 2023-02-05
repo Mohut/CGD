@@ -127,6 +127,7 @@ public class PlayerController : MonoBehaviour
             
             lineRenderer.SetPosition(0, transform.position);
             lineRenderer.SetPosition(1, wallPos);
+            
         }
     }
 
@@ -185,6 +186,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        
         Vector2 oldDirection = this.direction;
         if (!context.started)
         {
@@ -197,6 +199,11 @@ public class PlayerController : MonoBehaviour
         }
 
         Vector2 direction = context.ReadValue<Vector2>();
+        
+            
+        RaycastHit2D wallHit = Physics2D.Raycast((Vector2) transform.position, direction, 40f, wallMask);
+        wallPos = wallHit.point;
+        
         Vector3 gridpos = CanMove(direction);
         // if gridpos is 0, the player cant move in this direction, because there is a wall
         if (Vector3.Distance(gridpos, Vector3.zero) < 0.001f || Vector2.Distance(direction, Vector2.zero) < 0.001f)
@@ -240,12 +247,6 @@ public class PlayerController : MonoBehaviour
             speed = initialSpeed;
         }
 
-        if (hasGun)
-        {
-            
-            RaycastHit2D wallHit = Physics2D.Raycast((Vector2) transform.position, direction, 40f, wallMask);
-            wallPos = wallHit.point;
-        }
         
         
         int playernumber = GameManager.Instance.SpawnManager.PlayerColorDictionary[color];
