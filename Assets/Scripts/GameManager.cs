@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
 
     public void RegisterField(Vector3 pos)
     {
-        heatmap[ (int)(pos.y)*-1 + 5, (int) (pos.x + 9)] += 1;
+        heatmap[ (int)(pos.y)*-1 + 5, (int) (pos.x + 8)] += 1;
     }
 
     private void LogResult(int winnerId)
