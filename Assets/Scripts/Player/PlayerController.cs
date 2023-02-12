@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float speedBoostThreshold;
     [SerializeField] private float speedBoost;
+    [SerializeField] private float maxSpeed;
     private LineRenderer lineRenderer;
     public float speed;
     private float initialSpeed;
@@ -236,7 +237,9 @@ public class PlayerController : MonoBehaviour
             {
                 if (Vector2.Distance(this.direction, oldDirection) > 0.01f)
                 {
+                    if(speed >= maxSpeed) return;
                     speed += speedBoost;
+                    
                     StartCoroutine(Co_ShowSpeedBoost());
                 }
             }

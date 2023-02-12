@@ -535,7 +535,8 @@ MonoBehaviour:
   invincibilityTime: 2
   controller: {fileID: 1244215213366936261}
   speedBoostThreshold: 0.5
-  speedBoost: 0.2
+  speedBoost: 1
+  maxSpeed: 6
   speed: 3
   items: []
   pathTilemap: {fileID: 0}
